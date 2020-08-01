@@ -1,0 +1,22 @@
+@import '../../scss/var';
+@import '../../scss/mixin';
+
+
+.header {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height;
+
+  background-color: $main-color;
+
+  &__logo {
+    font-size: 15px;
+    color: #fff;
+
+    margin-left: 20px;
+  }
+}

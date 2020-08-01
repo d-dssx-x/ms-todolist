@@ -1,0 +1,34 @@
+@import './var';
+@mixin button() {
+  background-color: inherit;
+  border: none;
+  border-radius: $border-radius;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    opacity: .7;
+    cursor: pointer;
+  }
+}
+
+@mixin checkCirlce($color) {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid $color;
+  margin-right: 20px;
+}
+
+@mixin circleEl($color, $deg) {
+  content: "";
+  position: absolute;
+  right: 4px;
+  top: 9px;
+  width: 7px;
+  height: 1px;
+  background-color: $color;
+  transform: rotate($deg)
+}

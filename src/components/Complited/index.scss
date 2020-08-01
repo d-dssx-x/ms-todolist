@@ -1,0 +1,20 @@
+@import '../../scss/var';
+@import '../../scss/mixin';
+
+.complited {
+  display: flex;
+  align-items: center;
+  height: $task-height;
+  margin-left: 10px;
+  border-bottom: 1px solid $main-black-color;
+   cursor: pointer;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50px;
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,44 @@
+@import '../../scss/var';
+@import '../../scss/mixin';
+
+.auth {
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button {
+    margin-top: 10px;
+    margin-right: 5px;
+    padding: 14px 0;
+    flex: 1 1 auto;
+    font-size: 1.15em;
+    &:last-child {
+      margin-right: 0;
+    }
+    @include button;
+  }
+
+  &__button_main-color {
+    background-color: $main-color;
+    color: #fff;
+  }
+
+  &__button_second-color {
+    border: 1.5px solid $second-color;
+  }
+
+  &__button_click-anim {
+    animation: click .3s;
+
+    @keyframes click {
+      from {
+        transform: scale3d(.80, .80, 1);
+      }
+      to {
+        transform: scale3d(1, 1, 1);
+      }
+    }
+  }
+}

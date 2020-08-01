@@ -1,0 +1,112 @@
+@import '../../scss/var';
+@import '../../scss/mixin';
+
+.item {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 0 10px;
+  height: $task-height;
+  border-bottom: 1px solid $main-black-color;
+
+  &__title {
+    
+    &_done {
+      text-decoration-line: line-through;
+    }
+  }
+
+  &__circle {
+    position: relative;
+    @include checkCirlce($main-color);
+
+    &:hover {
+      &::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 10px;
+        width: 5px;
+        height: 1px;
+        background-color: $main-color;
+        transform: rotate(45deg)
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        right: 4px;
+        top: 9px;
+        width: 7px;
+        height: 1px;
+        background-color: $main-color;
+        transform: rotate(-45deg)
+      } 
+    }
+    &_active {
+      &::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 10px;
+        width: 5px;
+        height: 1px;
+        background-color: $main-color;
+        transform: rotate(45deg)
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        right: 4px;
+        top: 9px;
+        width: 7px;
+        height: 1px;
+        background-color: $main-color;
+        transform: rotate(-45deg)
+      }
+    }
+    &_done {
+      background-color: $main-color;
+      &::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 10px;
+        width: 5px;
+        height: 1px;
+        background-color: #fff;
+        transform: rotate(45deg)
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        right: 4px;
+        top: 9px;
+        width: 7px;
+        height: 1px;
+        background-color: #fff;
+        transform: rotate(-45deg)
+      }
+      &:hover {
+        &::before , &::after {
+          display: none
+        }
+        background-color: #fff;
+      }
+    }
+  }
+  &__group {
+    font-size: 12px;
+  }
+  &__icon {
+    position: absolute;
+    right: 10px;
+
+    &:hover {
+      opacity: .4;
+    }
+
+    &_imprt {
+      color: $main-color;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+@import '../../scss/var';
+
+.auth {
+  &__fields {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  &__field-wrapper {
+    margin-top: 10px;
+    position: relative;
+  }
+
+  &__field {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid $main-gray-color;
+    border-radius: $border-radius;
+    font-size: 1.15em;
+    &:focus {
+        border-color: #fff;
+        outline: none;
+        box-shadow: 0px 0px 3px 1.5px $main-color;
+      }
+  }
+  
+  &__show {
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    padding: 10px;
+    font-size: 16px;
+    color: $main-black-color;
+    cursor: pointer;
+  }
+
+  &__show_pass {
+    padding-right: 35px;
+  }
+}
