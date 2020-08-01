@@ -4,7 +4,7 @@ import './index.scss'
 import {useSelector, useDispatch} from 'react-redux'
 import {switchDoneTask, switchImprtntTask} from '../../redux/actions'
 
-const Item = ({title, id, done, listId, important, showList}) => {
+const Item = ({title, id, done, listTitle, listId, important}) => {
   const classes = done ? ['item__circle_done', 'item__title_done'] : ['', '']
 
   const dispatch = useDispatch()
@@ -13,6 +13,8 @@ const Item = ({title, id, done, listId, important, showList}) => {
 
   const titleList = useSelector((state) => state.lists)
       .find((el) => el.id === listId).title
+
+  const showList = listTitle === titleList ? false : true
 
   const doneHandler = () => {
     return dispatch(switchDoneTask({
@@ -66,7 +68,7 @@ Item.propTypes = {
   id: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
   important: PropTypes.bool,
-  showList: PropTypes.bool,
+  listTitle: PropTypes.string,
 }
 
 export default Item

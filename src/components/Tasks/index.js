@@ -16,6 +16,7 @@ const Tasks = ({title, tasks, showList, listId, important}) => {
         important={important}/>
       <div className="block">
         {noDoneTasks.map((el, i) => <Item
+          listTitle={title}
           showList={showList}
           key={i}
           {...el}/>)

@@ -11,7 +11,6 @@ const ImportantPage = () => {
     <Tasks
       title="Important"
       tasks={tasks}
-      showList
       listId='tasks'
       important/>
   )
