@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import PropTypes from 'prop-types'
 import './index.scss'
 import {Link, useLocation} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
@@ -47,61 +48,69 @@ const LeftBar = () => {
 
   return (
     <div className={`left-bar ${className}`}>
-      <button
-        onClick={onOpenPressHandler}
-        className="left-bar__btn">
-        <i className="fas fa-bars"></i>
-      </button>
-      <Link
-        className="link"
-        to="/todos">
-        <Button
-          active={active.todos}
-          title={'Tasks'}
-          icon={'fa-home'}
-          size={tasksSize}
-        />
-      </Link>
-      <Link
-        className="link"
-        to="/important"
-      >
-        <Button
-          active={active.important}
-          title={'Important'}
-          icon={'fa-exclamation'}
-          size={importantSize}/>
-      </Link>
-      <div className="custom">
-        {
-          customList.map((el) =>
-            <ButtonCustom
+      <div className="left-bar__header">
+        <button
+          onClick={onOpenPressHandler}
+          className="left-bar__btn">
+          <i className="fas fa-bars"/>
+        </button>
+      </div>
+      <div className="left-bar__list">
+        <Link
+          className="link"
+          to="/todos"
+        >
+          <Button
+            active={active.todos}
+            title={'Tasks'}
+            icon={'fa-home'}
+            size={tasksSize}
+          />
+        </Link>
+        <Link
+          className="link"
+          to="/important"
+        >
+          <Button
+            active={active.important}
+            title={'Important'}
+            icon={'fa-star'}
+            size={importantSize}/>
+        </Link>
+        <div className="custom">
+          {
+            customList.map((el) => <ButtonCustom
               {...el}
               key={el.id}
               active={active[el.id]}
             />)
-        }
-        <AddButton
-          show={onOpenAddButton}
-        />
+          }
+          <AddButton show={onOpenAddButton} />
+        </div>
       </div>
     </div>
   )
 }
 
+
 const Button = ({title, icon, active, size}) => {
   const classes = active ? 'left-bar__category_active' : ''
   return (
     <div className={`left-bar__category ${classes}`}>
-      <div className="left-bar__wrapper">
-        <div className="left-bar__btn-cat">
-          <i className={`fas ${icon}`}/>
-        </div>
-        <span className="left-bar__title">{title}</span>
+      <div className="left-bar__btn-cat">
+        <i className={`fas ${icon}`}/>
       </div>
+      <span className="left-bar__title">{title}</span>
       <span className="left-bar__size">{size !== 0 && size}</span>
     </div>
   )
+}
+
+Button.propTypes = {
+  title: PropTypes.string,
+  icon: PropTypes.string,
+  active: PropTypes.bool,
+  size: PropTypes.number,
 }
 
 const ButtonCustom = ({active, title, id}) => {
@@ -119,6 +128,12 @@ const ButtonCustom = ({active, title, id}) => {
       />
     </Link>
   )
+}
+
+ButtonCustom.propTypes = {
+  title: PropTypes.string,
+  active: PropTypes.bool,
+  id: PropTypes.string.isRequired,
 }
 
 const AddButton = ({active, show}) => {
@@ -163,5 +178,9 @@ const AddButton = ({active, show}) => {
   )
 }
 
+AddButton.propTypes = {
+  active: PropTypes.bool,
+  show: PropTypes.func,
+}
 
 export default LeftBar

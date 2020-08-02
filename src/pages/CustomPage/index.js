@@ -2,6 +2,7 @@ import React from 'react'
 import Tasks from '../../components/Tasks'
 import {useLocation} from 'react-router-dom'
 import {useSelector} from 'react-redux'
+import Page404 from '../404Page'
 
 const CustomPage = () => {
   const location = useLocation()
@@ -13,13 +14,16 @@ const CustomPage = () => {
   return (
     <>
       {list &&
-      <div
-        className="task-page">
-        <Tasks
-          title={list.title}
-          tasks={tasks}
-          listId={listId}/>
-      </div>}
+        <>
+          <Tasks
+            title={list.title}
+            tasks={tasks}
+            listId={listId}/>
+        </>
+      }
+      {!list &&
+        <Page404 />
+      }
     </>
   )
 }

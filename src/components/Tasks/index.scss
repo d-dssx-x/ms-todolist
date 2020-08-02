@@ -1,22 +1,29 @@
 @import '../../scss/var';
 @import '../../scss/mixin';
 
-.wrapper {
-  width: 100%;
-
-  &:hover {
-    background-color: rgba($color: $main-gray-color, $alpha: .4);
-    cursor: pointer;
-  }
-}
-
 .tasks {
   margin-top: $header-height;
-  padding: 10px;
-  width: 100%;
+  display: flex;
+  flex: 1 1 0;
+  overflow: hidden;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px 10px;
+  padding-bottom: 0;
 
   &__title {
-    margin-bottom: 20px;
-    margin-left: 10px;
+    margin: 10px 10px;
+    font-size: 1.6rem;
+    border: none;
+
+    &:disabled {
+      background-color: inherit;
+      color: inherit;
+      border: none;
+    }
+  }
+
+  & .block {
+    overflow: auto;
   }
 }

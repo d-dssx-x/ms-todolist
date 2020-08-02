@@ -9,7 +9,7 @@
   }
 
   &:hover {
-    opacity: .7;
+    opacity: 1;
     cursor: pointer;
   }
 }
@@ -19,7 +19,6 @@
   height: 20px;
   border-radius: 50%;
   border: 1px solid $color;
-  margin-right: 20px;
 }
 
 @mixin circleEl($color, $deg) {
@@ -31,4 +30,13 @@
   height: 1px;
   background-color: $color;
   transform: rotate($deg)
+}
+
+@mixin circlePs($width, $deg, $color) {
+  content: "";
+  position: absolute;
+  width: $width;
+  height: 1px;
+  background-color: $color;
+  transform: rotate($deg);
 }

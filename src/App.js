@@ -9,7 +9,7 @@ const App = () => {
   const routes = useRouter(true)
   return (
     <BrowserRouter>
-      <div className="task-page">
+      <div className="container">
         <Header />
         <LeftBar />
         {routes}

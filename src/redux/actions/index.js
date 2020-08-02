@@ -1,4 +1,5 @@
 export const ADD_LIST = 'LISTS/ADD_LIST'
+export const CHANGE_TITLE_LIST = 'LISTS/CHANGE_TITLE_LIST'
 
 export const ADD_TASK = 'TASKS/ADD_TASK'
 export const SWITCH_DONE_TASK = 'TASKS/SWITCH_DONE_TASK'
@@ -39,6 +40,16 @@ export const switchImprtntTask = (values) => {
     values: {
       id: values.id,
       important: values.important,
+    },
+  }
+}
+
+export const changeTitleList = (values) => {
+  return {
+    type: CHANGE_TITLE_LIST,
+    values: {
+      id: values.id,
+      title: values.title,
     },
   }
 }

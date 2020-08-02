@@ -1,0 +1,10 @@
+@import '../../scss/mixin';
+@import '../../scss/var';
+
+.not-found {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  margin-top: $header-height;
+}

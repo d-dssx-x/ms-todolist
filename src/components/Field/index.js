@@ -5,8 +5,8 @@ import {useDispatch} from 'react-redux'
 import {addTask} from '../../redux/actions'
 
 const Field = ({listId, important}) => {
-  const ref = useRef()
-  const [active, setActive] = useState(false)
+  const ref = useRef(null)
+  const [active, setActive] = useState(true)
   const classes = active ? 'field_active' : ''
   const [taskTitle, setTaskTitle] = useState('')
   const dispatch = useDispatch()

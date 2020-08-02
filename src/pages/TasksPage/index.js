@@ -7,6 +7,7 @@ const TasksPage = () => {
   const tasks = useSelector((state) => state.tasks)
   return (
     <Tasks
+      disabledInput={true}
       title="Tasks"
       tasks={tasks}
       listId='tasks'/>

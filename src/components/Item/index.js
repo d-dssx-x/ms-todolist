@@ -32,7 +32,7 @@ const Item = ({title, id, done, listTitle, listId, important}) => {
 
   return (
     <div className="wrapper">
-      <div className={`item`}>
+      <div className="item">
         <div
           role="button"
           onClick={doneHandler}

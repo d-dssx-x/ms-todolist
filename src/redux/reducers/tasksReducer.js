@@ -32,13 +32,13 @@ const init = [
 export const tasksReducer = (state = init, action) => {
   switch (action.type) {
     case ADD_TASK:
-      return [...state, {
+      return [{
         title: action.values.title,
         id: Date.now().toString(),
         done: false,
         listId: action.values.listId,
         important: !!action.values.important,
-      }]
+      }, ...state]
     case SWITCH_DONE_TASK:
       return state
           .map((el) => el.id === action.values.id ?

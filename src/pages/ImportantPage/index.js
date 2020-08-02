@@ -9,6 +9,7 @@ const ImportantPage = () => {
   const tasks = useSelector((state) => state.tasks).filter((el) => el.important)
   return (
     <Tasks
+      disabledInput={true}
       title="Important"
       tasks={tasks}
       listId='tasks'
