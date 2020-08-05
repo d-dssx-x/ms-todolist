@@ -12,6 +12,7 @@ export const ADD_DUE = 'TASKS/ADD_DUE'
 export const DELETE_DUE = 'TASKS/DELETE_DUE'
 export const ADD_NOTE = 'TASKS/ADD_NOTE'
 export const ADD_TASK_MYDAY = 'TASKS/ADD_TASK_MYDAY'
+export const DELETE_TASK = 'TASKS/DELETE_TASK'
 
 export const SELECT_TASK = 'SYSTEM/SELECT_TASK'
 export const SHOW_CALENDAR = 'SYSTEM/SHOW_CALENDAR'
@@ -33,6 +34,7 @@ export const addTask = (values) => {
       title: values.title,
       listId: values.listId,
       important: values.important,
+      created: values.created,
     },
   }
 }
@@ -152,6 +154,14 @@ export const addTaskMyDay = (values) => {
       listId: values.listId,
       important: values.important,
       due: values.due,
+      created: values.created,
     },
+  }
+}
+
+export const deleteTask = (id) => {
+  return {
+    type: DELETE_TASK,
+    id,
   }
 }

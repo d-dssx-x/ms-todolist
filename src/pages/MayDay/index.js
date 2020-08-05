@@ -4,10 +4,8 @@ import {useSelector} from 'react-redux'
 import moment from 'moment'
 
 const MyDay = () => {
-  const tasks = useSelector((state) => state.tasks).filter((el) => {
-    if (el.remind) return el.remind.split('|')[0] === moment().format('L')
-    if (el.due) return el.due === moment().format('L')
-  })
+  const tasks = useSelector((state) => state.tasks)
+      .filter((el) => el.due === moment().format('L'))
   return (
     <Tasks
       tasks={tasks}

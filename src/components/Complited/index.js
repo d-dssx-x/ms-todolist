@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Item from '../Item'
 import './index.scss'
 
-const Complited = ({tasks, showList}) => {
+const Complited = ({tasks, showList, currentList}) => {
   const [open, setOpen] = useState(false)
 
   const openHandler = () => {
@@ -33,6 +33,7 @@ const Complited = ({tasks, showList}) => {
           index={i}
           {...el}
           item={el}
+          currentList={currentList}
           showList={showList}/>)
       }
     </>
@@ -42,6 +43,7 @@ const Complited = ({tasks, showList}) => {
 Complited.propTypes = {
   tasks: PropTypes.array.isRequired,
   showList: PropTypes.bool,
+  currentList: PropTypes.string.isRequired,
 }
 
 

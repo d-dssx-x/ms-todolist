@@ -75,12 +75,14 @@ const Tasks = ({
           key={el.id}
           index={i}
           item={el}
+          currentList={listId}
           {...el}/>)
         }
         {!!doneTasks.length &&
           <Complited
             tasks={doneTasks}
             showList={showList}
+            currentList={listId}
           />
         }
       </div>

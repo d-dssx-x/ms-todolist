@@ -22,6 +22,7 @@ const Item = ({
   done,
   listTitle,
   listId,
+  currentList,
   important}) => {
   const classes = done ? ['item__circle_done', 'item__title_done'] : ['', '']
   const currentSelected = useSelector((state) => state.system)
@@ -65,9 +66,8 @@ const Item = ({
       if (dragI === hoverI) {
         return
       }
-
-      dispatch(switchTasksInList({dragI, hoverI, listId}))
-
+      if (item.done) return
+      dispatch(switchTasksInList({dragI, hoverI, listId: currentList}))
       item.index = hoverI
     },
   })
@@ -81,6 +81,7 @@ const Item = ({
 
   return (
     <div
+      id='#hover'
       style={{opacity: isDragging ? 0 : 1}}
       ref={drag(drop(ref))}
       onClick={selectTaskHandler}
@@ -146,6 +147,7 @@ Item.propTypes = {
   remind: PropTypes.string,
   due: PropTypes.string,
   note: PropTypes.string,
+  currentList: PropTypes.string.isRequired,
 }
 
 export default Item

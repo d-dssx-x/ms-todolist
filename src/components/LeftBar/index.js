@@ -43,17 +43,13 @@ const LeftBar = () => {
       .filter((el) => el.type !== 'main')
 
   const tasks = useSelector((state) => state.tasks)
-  const tasksSize = tasks
-      .filter((el) => el.listId === 'tasks').length
+  const tasksSize = tasks.length
   const importantSize = tasks
       .filter((el) => el.important).length
 
   const currentDay = moment().format('L')
   const myDaySize = tasks
-      .filter((el) => {
-        if (el.remind) return el.remind.split('|')[0] === currentDay
-        if (el.due) return el.due === currentDay
-      }).length
+      .filter((el) => el.due === currentDay).length
   return (
     <div className={`left-bar ${className}`}>
       <div className="left-bar__header">

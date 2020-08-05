@@ -48,6 +48,7 @@ const Field = ({listId, important, isMyDay}) => {
           listId,
           important,
           due: moment().format('L'),
+          created: moment().format('LLLL'),
         }))
         setTaskTitle('')
       } else {
@@ -55,6 +56,7 @@ const Field = ({listId, important, isMyDay}) => {
           title: taskTitle,
           listId,
           important,
+          created: moment().format('LLLL'),
         }))
         setTaskTitle('')
       }

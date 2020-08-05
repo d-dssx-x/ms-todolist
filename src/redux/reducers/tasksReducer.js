@@ -10,7 +10,8 @@ import {
   DELETE_DUE,
   DELETE_REMIND,
   ADD_NOTE,
-  ADD_TASK_MYDAY} from '../actions'
+  ADD_TASK_MYDAY,
+  DELETE_TASK} from '../actions'
 
 const init = [
   {
@@ -19,6 +20,7 @@ const init = [
     done: false,
     important: true,
     listId: 'tasks',
+    created: '06/08/2020',
   },
   {
     title: 'some 2',
@@ -26,23 +28,14 @@ const init = [
     done: false,
     important: false,
     listId: 'tasks',
-  },
-  {
-    title: 'some 4',
-    id: '9',
-    done: true,
-    listId: 'add',
-  },
-  {
-    title: 'some 4',
-    id: '10',
-    done: true,
-    listId: 'add',
+    created: '10/10/2020',
   },
 ]
 
 export const tasksReducer = (state = init, action) => {
   switch (action.type) {
+    case DELETE_TASK:
+      return state.filter((el) => el.id !== action.id)
     case ADD_TASK_MYDAY:
       return [{
         title: action.values.title,
@@ -51,6 +44,7 @@ export const tasksReducer = (state = init, action) => {
         listId: action.values.listId,
         important: !!action.values.important,
         due: action.values.due,
+        created: action.values.created,
       }, ...state]
     case DELETE_DUE:
       return state.map((el) => el.id === action.id ? {...el, due: null} : el)
@@ -73,6 +67,7 @@ export const tasksReducer = (state = init, action) => {
         done: false,
         listId: action.values.listId,
         important: !!action.values.important,
+        created: action.values.created,
       }, ...state]
     case SWITCH_DONE_TASK:
       return state
@@ -87,11 +82,21 @@ export const tasksReducer = (state = init, action) => {
           .map((el) => el.id === action.values.id ?
           {...el, title: action.values.title} : el)
     case SWITCH_TASKS_IN_LIST:
+      if (action.values.listId === 'tasks') {
+        const item = state[action.values.dragI]
+        const hover = state[action.values.hoverI]
+        if (item.done !== hover.done) return state
+        const newCards = state.filter((el, i) => i !== action.values.dragI)
+        newCards.splice(action.values.hoverI, 0, item)
+        return [...newCards]
+      }
       const currentListTasks = state
           .filter((el) => el.listId === action.values.listId)
+      const item = currentListTasks[action.values.dragI]
+      const hover = currentListTasks[action.values.hoverI]
+      if (item.done !== hover.done) return state
       const otherListsTasks = state
           .filter((el) => el.listId !== action.values.listId)
-      const item = currentListTasks[action.values.dragI]
       const newCards = currentListTasks
           .filter((el, i) => i !== action.values.dragI)
       newCards.splice(action.values.hoverI, 0, item)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import Textarea from 'react-textarea-autosize'
 import './index.scss'
 import {useSelector, useDispatch} from 'react-redux'
@@ -10,7 +10,9 @@ import {
   hideCalendar,
   deleteDue,
   deleteRemind,
-  addNote} from '../../redux/actions'
+  addNote,
+  selectTask,
+  deleteTask} from '../../redux/actions'
 import PropTypes from 'prop-types'
 import Calendar from '../Calendar'
 import moment from 'moment'
@@ -45,34 +47,37 @@ const RightBar = ({id}) => {
     <div
       onClick={() => dispatch(hideCalendar())}
       className="right-bar">
-      <div className="right-bar__tasks-wrapper">
-        <div
-          role="button"
-          onClick={onPressDoneHandler}
-          className={`right-bar__circle ${classDone}`}/>
-        <Textarea
-          maxRows={5}
-          minRows={1}
-          className="right-bar__title"
-          value={title}
-          onChange={textareaHandler}
-        />
-        <div
-          role="button"
-          onClick={importantHandler}
-          className={`right-bar__icon ${classImprtnt}`}>
-          {!important &&
+      <div className="right-bar__inner">
+        <div className="right-bar__tasks-wrapper">
+          <div
+            role="button"
+            onClick={onPressDoneHandler}
+            className={`right-bar__circle ${classDone}`}/>
+          <Textarea
+            maxRows={5}
+            minRows={1}
+            className="right-bar__title"
+            value={title}
+            onChange={textareaHandler}
+          />
+          <div
+            role="button"
+            onClick={importantHandler}
+            className={`right-bar__icon ${classImprtnt}`}>
+            {!important &&
             <i className="far fa-star"/>
-          }
-          {important &&
+            }
+            {important &&
             <i className="fas fa-star"/>
-          }
+            }
+          </div>
         </div>
-      </div>
-      <div className="right-bar__list-item">
-        <Remind id={id} />
-        <Due id={id} />
-        <Note id={id}/>
+        <div className="right-bar__list-item">
+          <Remind id={id} />
+          <Due id={id} />
+          <Note id={id}/>
+          <Footer id={id}/>
+        </div>
       </div>
     </div>
   )
@@ -227,6 +232,48 @@ const Note = ({id}) => {
 }
 
 Note.propTypes = {
+  id: PropTypes.string.isRequired,
+}
+
+const Footer = ({id}) => {
+  const dispatch = useDispatch()
+  const task = useSelector((state) => state.tasks).find((el) => el.id === id)
+  const [title, setTitle] = useState('')
+
+  const deleteTaskHandler = () => {
+    dispatch(deleteTask(id))
+    return dispatch(selectTask(null))
+  }
+
+  useEffect(() => {
+    if (moment(task.created).format('L') === moment().format('L')) {
+      return setTitle('Created Today')
+    } else {
+      setTitle(`Created on ${moment(task.created).calendar()}`)
+    }
+  }, [])
+  return (
+    <div className="footer-bar">
+      <div
+        role="button"
+        onClick={() => dispatch(selectTask(null))}
+        className="footer-bar__icon">
+        <i className="fas fa-times"/>
+      </div>
+      <div className="footer-bar__title">
+        {title}
+      </div>
+      <div
+        role="button"
+        onClick={deleteTaskHandler}
+        className="footer-bar__icon">
+        <i className="fas fa-trash"/>
+      </div>
+    </div>
+  )
+}
+
+Footer.propTypes = {
   id: PropTypes.string.isRequired,
 }
 
