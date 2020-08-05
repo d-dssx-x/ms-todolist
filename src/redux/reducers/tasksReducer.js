@@ -9,7 +9,8 @@ import {
   ADD_DUE,
   DELETE_DUE,
   DELETE_REMIND,
-  ADD_NOTE} from '../actions'
+  ADD_NOTE,
+  ADD_TASK_MYDAY} from '../actions'
 
 const init = [
   {
@@ -42,6 +43,15 @@ const init = [
 
 export const tasksReducer = (state = init, action) => {
   switch (action.type) {
+    case ADD_TASK_MYDAY:
+      return [{
+        title: action.values.title,
+        id: Date.now().toString(),
+        done: false,
+        listId: action.values.listId,
+        important: !!action.values.important,
+        due: action.values.due,
+      }, ...state]
     case DELETE_DUE:
       return state.map((el) => el.id === action.id ? {...el, due: null} : el)
     case DELETE_REMIND:

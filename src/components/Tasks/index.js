@@ -5,15 +5,25 @@ import Complited from '../Complited'
 import Field from '../Field'
 import Item from '../Item'
 import {useDispatch} from 'react-redux'
-import {changeTitleList} from '../../redux/actions'
+import {changeTitleList, selectTask} from '../../redux/actions'
+import moment from 'moment'
 
-const Tasks = ({title, tasks, showList, listId, important, disabledInput}) => {
+const Tasks = ({
+  title,
+  tasks,
+  showList,
+  listId,
+  important,
+  disabledInput,
+  isMyDay}) => {
   const noDoneTasks = tasks.filter((el) => !el.done)
   const doneTasks = tasks.filter((el) => el.done)
 
   const dispatch = useDispatch()
 
   const ref = useRef(null)
+
+  const refBlock = useRef(null)
 
   const inputHandler = (event) => {
     return dispatch(changeTitleList({
@@ -28,8 +38,20 @@ const Tasks = ({title, tasks, showList, listId, important, disabledInput}) => {
     }
   }
 
+  const closeRightBarHadnler = (event) => {
+    if (event.target === refBlock.current) {
+      dispatch(selectTask(null))
+    }
+  }
+
+  const currentTime = moment().format('LLLL').split(',')[0] + ', ' +
+      moment().format('LLLL').split(',')[1]
+
   return (
-    <div className="tasks">
+    <div
+      ref={refBlock}
+      onClick={closeRightBarHadnler}
+      className="tasks">
       <input
         ref={ref}
         disabled={disabledInput}
@@ -37,7 +59,13 @@ const Tasks = ({title, tasks, showList, listId, important, disabledInput}) => {
         value={title}
         onChange={inputHandler}
         onKeyPress={blurInputHandler}/>
+      {isMyDay &&
+        <div className="tasks__myday">
+          {currentTime}
+        </div>
+      }
       <Field
+        isMyDay={isMyDay}
         listId={listId}
         important={important}/>
       <div className="block">
@@ -67,6 +95,7 @@ Tasks.propTypes = {
   listId: PropTypes.string.isRequired,
   important: PropTypes.bool,
   disabledInput: PropTypes.bool,
+  isMyDay: PropTypes.bool,
 }
 
 export default Tasks

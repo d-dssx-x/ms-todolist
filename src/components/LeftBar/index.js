@@ -4,6 +4,7 @@ import './index.scss'
 import {Link, useLocation} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {addNewList} from '../../redux/actions'
+import moment from 'moment'
 
 
 const LeftBar = () => {
@@ -30,6 +31,7 @@ const LeftBar = () => {
   const [active, setActive] = useState({
     todos: false,
     important: false,
+    myDay: false,
   })
 
   useEffect(() => {
@@ -40,12 +42,18 @@ const LeftBar = () => {
   const customList = useSelector((state) => state.lists)
       .filter((el) => el.type !== 'main')
 
-  const tasksSize = useSelector((state) => state.tasks)
+  const tasks = useSelector((state) => state.tasks)
+  const tasksSize = tasks
       .filter((el) => el.listId === 'tasks').length
-  const importantSize = useSelector((state) => state.tasks)
+  const importantSize = tasks
       .filter((el) => el.important).length
 
-
+  const currentDay = moment().format('L')
+  const myDaySize = tasks
+      .filter((el) => {
+        if (el.remind) return el.remind.split('|')[0] === currentDay
+        if (el.due) return el.due === currentDay
+      }).length
   return (
     <div className={`left-bar ${className}`}>
       <div className="left-bar__header">
@@ -56,6 +64,14 @@ const LeftBar = () => {
         </button>
       </div>
       <div className="left-bar__list">
+        <Link to="/MyDay">
+          <Button
+            active={active.myDay}
+            title={'MyDay'}
+            icon={'fa-sun'}
+            size={myDaySize}
+          />
+        </Link>
         <Link
           className="link"
           to="/todos"

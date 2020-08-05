@@ -16,6 +16,11 @@ const init = [
     id: 'add',
     type: 'custom',
   },
+  {
+    title: 'My Day',
+    id: 'tasks-myday',
+    type: 'main',
+  },
 ]
 
 

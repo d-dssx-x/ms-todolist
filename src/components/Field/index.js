@@ -2,9 +2,10 @@ import React, {useState, useRef, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import './index.scss'
 import {useDispatch} from 'react-redux'
-import {addTask} from '../../redux/actions'
+import {addTask, addTaskMyDay} from '../../redux/actions'
+import moment from 'moment'
 
-const Field = ({listId, important}) => {
+const Field = ({listId, important, isMyDay}) => {
   const ref = useRef(null)
   const [active, setActive] = useState(true)
   const classes = active ? 'field_active' : ''
@@ -41,12 +42,22 @@ const Field = ({listId, important}) => {
 
   const onKeyPressHandler = (event) => {
     if (event.key === 'Enter' && taskTitle.trim() !== '') {
-      dispatch(addTask({
-        title: taskTitle,
-        listId,
-        important,
-      }))
-      setTaskTitle('')
+      if (isMyDay) {
+        dispatch(addTaskMyDay({
+          title: taskTitle,
+          listId,
+          important,
+          due: moment().format('L'),
+        }))
+        setTaskTitle('')
+      } else {
+        dispatch(addTask({
+          title: taskTitle,
+          listId,
+          important,
+        }))
+        setTaskTitle('')
+      }
     }
   }
 
@@ -87,6 +98,7 @@ const Field = ({listId, important}) => {
 Field.propTypes = {
   listId: PropTypes.string.isRequired,
   important: PropTypes.bool,
+  isMyDay: PropTypes.bool,
 }
 
 export default Field
