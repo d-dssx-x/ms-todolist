@@ -1,0 +1,151 @@
+@import '../../scss/var';
+@import '../../scss/mixin';
+
+.fd-col {
+  flex-direction: column;
+}
+
+
+.right-bar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  margin-top: $header-height;
+  width: 0;
+  background-color: $bar-color;
+  border-left: 1px solid $bar-border-color;
+
+  animation: open .2s ease-in forwards;
+
+  @keyframes open {
+    from {width: 0;}
+    to {width: 300px;}
+  }
+
+  &__tasks-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid $bar-border-color;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  &__title {
+    width: 100%;
+    padding: 5px;
+    margin: 0 10px;
+    border: none;
+    resize: none;
+    height: 30px;
+
+    &:focus {
+      outline: none;
+      background-color: $bar-color;
+    }
+  }
+
+  &__circle {
+    flex-shrink: 0;
+    position: relative;
+    @include checkCirlce($main-color);
+    cursor: pointer;
+
+    &:hover {
+      &::after {
+        left: 4px;
+        top: 10px;
+        @include  circlePs(5px, 45deg, $main-color)
+      }
+      &::before {
+        right: 4px;
+        top: 9px;
+        @include  circlePs(7px, -45deg, $main-color)
+      } 
+    }
+    &_done {
+      background-color: $main-color;
+      &::after {
+        left: 4px;
+        top: 10px;
+        @include  circlePs(5px, 45deg, #fff)
+      }
+      &::before {
+        right: 4px;
+        top: 9px;
+        @include  circlePs(7px, -45deg, #fff)
+      }
+      &:hover {
+        &::before , &::after {
+          display: none
+        }
+        background-color: inherit;
+      }
+    }
+  }
+  &__icon {
+
+    &:hover {
+      cursor: pointer;
+      opacity: .4;
+    }
+
+    &_imprt {
+      color: $main-color;
+    }
+  }
+}
+
+
+.remind-wrapper {
+  position: relative;
+  padding: 0 10px;
+
+  &:last-child {
+    border-bottom: 1px solid $bar-border-color;
+  }
+}
+
+.remind {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid $bar-border-color;
+  border-bottom: none;
+  font-size: .7rem;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba($color: #000000, $alpha: .10);
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    font-size: .8rem;
+
+    &_remind {
+      color: $main-color;
+    }
+  }
+
+  &__title {
+    margin-left: 15px;
+    font-weight: 300;
+  }
+
+  &__show {
+    margin-left: 15px;
+    color: $main-color;
+  }
+
+  &__show-day {
+    font-size: .6rem;
+    color: #000;
+  }
+
+}

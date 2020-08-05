@@ -1,11 +1,22 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import PropTypes from 'prop-types'
 import './index.scss'
 import {useSelector, useDispatch} from 'react-redux'
-import {switchDoneTask, switchImprtntTask} from '../../redux/actions'
+import {
+  switchDoneTask,
+  switchImprtntTask,
+  selectTask,
+  switchTasksInList} from '../../redux/actions'
+import {useDrop, useDrag} from 'react-dnd'
+import {DND_ITEM} from '../../types'
 
-const Item = ({title, id, done, listTitle, listId, important}) => {
+const Item = ({title, id, item, index, done, listTitle, listId, important}) => {
   const classes = done ? ['item__circle_done', 'item__title_done'] : ['', '']
+
+  const currentSelected = useSelector((state) => state.system)
+
+  const selectedClass = currentSelected
+      .selectedTasks === id ? 'wrapper_selected' : ''
 
   const dispatch = useDispatch()
 
@@ -16,22 +27,54 @@ const Item = ({title, id, done, listTitle, listId, important}) => {
 
   const showList = listTitle === titleList ? false : true
 
-  const doneHandler = () => {
-    return dispatch(switchDoneTask({
-      id,
-      done: !done,
-    }))
+  const doneHandler = (event) => {
+    event.stopPropagation()
+    return dispatch(switchDoneTask(id))
   }
 
-  const importantHandler = () => {
-    return dispatch(switchImprtntTask({
-      id,
-      important: !important,
-    }))
+  const importantHandler = (event) => {
+    event.stopPropagation()
+    return dispatch(switchImprtntTask(id))
   }
+
+  const selectTaskHandler = () => {
+    return dispatch(selectTask(id))
+  }
+
+  const ref = useRef(null)
+
+  const [, drop] = useDrop({
+    accept: DND_ITEM,
+    hover(item, monitor) {
+      if (!ref.current) {
+        return
+      }
+      const dragI = item.index
+      const hoverI = index
+
+      if (dragI === hoverI) {
+        return
+      }
+
+      dispatch(switchTasksInList({dragI, hoverI, listId}))
+
+      item.index = hoverI
+    },
+  })
+
+  const [{isDragging}, drag] = useDrag({
+    item: {type: DND_ITEM, ...item, index},
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  })
 
   return (
-    <div className="wrapper">
+    <div
+      style={{opacity: isDragging ? 0 : 1}}
+      ref={drag(drop(ref))}
+      onClick={selectTaskHandler}
+      className={`wrapper ${selectedClass}`}>
       <div className="item">
         <div
           role="button"
@@ -69,6 +112,8 @@ Item.propTypes = {
   listId: PropTypes.string.isRequired,
   important: PropTypes.bool,
   listTitle: PropTypes.string,
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
 }
 
 export default Item

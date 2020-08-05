@@ -1,4 +1,11 @@
-import {ADD_TASK, SWITCH_DONE_TASK, SWITCH_IMPRTNT_TASK} from '../actions'
+/* eslint-disable no-case-declarations */
+import {
+  ADD_TASK,
+  SWITCH_DONE_TASK,
+  SWITCH_IMPRTNT_TASK,
+  CHANGE_TITLE_TASK,
+  SWITCH_TASKS_IN_LIST,
+  ADD_REMIND} from '../actions'
 
 const init = [
   {
@@ -31,6 +38,9 @@ const init = [
 
 export const tasksReducer = (state = init, action) => {
   switch (action.type) {
+    case ADD_REMIND:
+      return state.map((el) => el.id === action.values.id ?
+        {...el, remind: action.values.remind} : el)
     case ADD_TASK:
       return [{
         title: action.values.title,
@@ -41,12 +51,26 @@ export const tasksReducer = (state = init, action) => {
       }, ...state]
     case SWITCH_DONE_TASK:
       return state
-          .map((el) => el.id === action.values.id ?
-          {...el, done: action.values.done} : el)
+          .map((el) => el.id === action.id ?
+          {...el, done: !el.done} : el)
     case SWITCH_IMPRTNT_TASK:
       return state
+          .map((el) => el.id === action.id ?
+          {...el, important: !el.important} : el)
+    case CHANGE_TITLE_TASK:
+      return state
           .map((el) => el.id === action.values.id ?
-          {...el, important: action.values.important} : el)
+          {...el, title: action.values.title} : el)
+    case SWITCH_TASKS_IN_LIST:
+      const currentListTasks = state
+          .filter((el) => el.listId === action.values.listId)
+      const otherListsTasks = state
+          .filter((el) => el.listId !== action.values.listId)
+      const item = currentListTasks[action.values.dragI]
+      const newCards = currentListTasks
+          .filter((el, i) => i !== action.values.dragI)
+      newCards.splice(action.values.hoverI, 0, item)
+      return [...newCards, ...otherListsTasks]
     default:
       return state
   }

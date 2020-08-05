@@ -1,0 +1,106 @@
+@import '../../scss/mixin';
+@import '../../scss/var';
+
+.calendar {
+  position: absolute;
+  top: 35px;
+  left: 50px;
+  width: 200px;
+  min-height: 300px;
+  border-radius: $border-radius;
+  z-index: 1000;
+  box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+  background-color: #fff;
+
+  &__title {
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid $bar-border-color;
+  }
+
+  &__tool {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid $bar-border-color;
+  }
+
+  &__buttons {
+    display: flex;
+  }
+
+  &__button {
+    margin-right: 10px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: .5;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__days {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    padding-bottom: 0;
+  }
+
+  &__day {
+    @include button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid $main-color;
+    }
+
+    &_selected {
+      background-color: rgba($color: $main-color, $alpha: .2);
+    }
+  }
+  &__day-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+
+    &_current {
+      background-color: $main-color;
+    }
+  }
+
+  &__save {
+    @include button;
+    padding: 5px 10px;
+    margin-left: 5px;
+    background-color: $main-color;
+    color: #fff;
+    margin-bottom: 5px;
+
+    &:hover {
+      opacity: .5;
+    }
+  }
+
+  &__time-sel {
+    display: flex;
+    margin: 5px;
+    margin-left: 0px;
+  }
+
+  &__input {
+    width: 30px;
+    padding: 2px;
+    margin-left: 5px;
+  }
+}

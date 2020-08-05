@@ -44,7 +44,9 @@ const Tasks = ({title, tasks, showList, listId, important, disabledInput}) => {
         {noDoneTasks.map((el, i) => <Item
           listTitle={title}
           showList={showList}
-          key={i}
+          key={el.id}
+          index={i}
+          item={el}
           {...el}/>)
         }
         {!!doneTasks.length &&

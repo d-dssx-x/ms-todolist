@@ -29,8 +29,10 @@ const Complited = ({tasks, showList}) => {
       </div>
       {open &&
         tasks.map((el, i) => <Item
-          key={i}
+          key={el.id}
+          index={i}
           {...el}
+          item={el}
           showList={showList}/>)
       }
     </>
