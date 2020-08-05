@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './index.scss'
 import moment from 'moment'
 import {useDispatch, useSelector} from 'react-redux'
-import {addRemind, hideCalendar} from '../../redux/actions'
+import {addRemind, hideCalendar, addDue} from '../../redux/actions'
 import PropTypes from 'prop-types'
 
 const Calendar = ({id, title, type, isTime}) => {
@@ -43,6 +43,12 @@ const Calendar = ({id, title, type, isTime}) => {
       dispatch(addRemind({
         id,
         remind: selectedDay + '|' + timeSet.hours + ':' + timeSet.minutes,
+      }))
+      return dispatch(hideCalendar())
+    } else if (type === 'due' && selectedDay) {
+      dispatch(addDue({
+        id,
+        due: selectedDay,
       }))
       return dispatch(hideCalendar())
     }

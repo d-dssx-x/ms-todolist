@@ -5,7 +5,11 @@ import {
   SWITCH_IMPRTNT_TASK,
   CHANGE_TITLE_TASK,
   SWITCH_TASKS_IN_LIST,
-  ADD_REMIND} from '../actions'
+  ADD_REMIND,
+  ADD_DUE,
+  DELETE_DUE,
+  DELETE_REMIND,
+  ADD_NOTE} from '../actions'
 
 const init = [
   {
@@ -38,6 +42,17 @@ const init = [
 
 export const tasksReducer = (state = init, action) => {
   switch (action.type) {
+    case DELETE_DUE:
+      return state.map((el) => el.id === action.id ? {...el, due: null} : el)
+    case DELETE_REMIND:
+      return state.map((el) => el.id === action.id ? {...el, remind: null} : el)
+    case ADD_NOTE:
+      return state
+          .map((el) => el.id === action.values.id ?
+          {...el, note: action.values.note} : el)
+    case ADD_DUE:
+      return state.map((el) => el.id === action.values.id ?
+      {...el, due: action.values.due} : el)
     case ADD_REMIND:
       return state.map((el) => el.id === action.values.id ?
         {...el, remind: action.values.remind} : el)

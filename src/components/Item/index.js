@@ -9,12 +9,22 @@ import {
   switchTasksInList} from '../../redux/actions'
 import {useDrop, useDrag} from 'react-dnd'
 import {DND_ITEM} from '../../types'
+import moment from 'moment'
 
-const Item = ({title, id, item, index, done, listTitle, listId, important}) => {
+const Item = ({
+  title,
+  id,
+  item,
+  remind,
+  due,
+  note,
+  index,
+  done,
+  listTitle,
+  listId,
+  important}) => {
   const classes = done ? ['item__circle_done', 'item__title_done'] : ['', '']
-
   const currentSelected = useSelector((state) => state.system)
-
   const selectedClass = currentSelected
       .selectedTasks === id ? 'wrapper_selected' : ''
 
@@ -84,10 +94,29 @@ const Item = ({title, id, item, index, done, listTitle, listId, important}) => {
           <div className={`item__title ${classes[1]}`}>
             {title}
           </div>
-          {showList &&
           <div className="item__group">
-            {titleList}
-          </div>}
+            {showList &&
+              <div className="item__list">{titleList}</div>
+            }
+            {remind &&
+              <div className="item__bell">
+                <i className="far fa-bell" />
+              </div>
+            }
+            {due &&
+              <div className="item__due">
+                <div className="item__calendar">
+                  <i className="far fa-calendar-alt"/>
+                </div>
+                Due {moment(due).format('ll')}
+              </div>
+            }
+            {note &&
+              <div className="item__note">
+                <i className="far fa-sticky-note"></i>
+              </div>
+            }
+          </div>
         </div>
         <div
           role="button"
@@ -114,6 +143,9 @@ Item.propTypes = {
   listTitle: PropTypes.string,
   item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
+  remind: PropTypes.string,
+  due: PropTypes.string,
+  note: PropTypes.string,
 }
 
 export default Item

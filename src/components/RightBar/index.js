@@ -7,7 +7,10 @@ import {
   switchDoneTask,
   switchImprtntTask,
   showCalendarWin,
-  hideCalendar} from '../../redux/actions'
+  hideCalendar,
+  deleteDue,
+  deleteRemind,
+  addNote} from '../../redux/actions'
 import PropTypes from 'prop-types'
 import Calendar from '../Calendar'
 import moment from 'moment'
@@ -68,6 +71,8 @@ const RightBar = ({id}) => {
       </div>
       <div className="right-bar__list-item">
         <Remind id={id} />
+        <Due id={id} />
+        <Note id={id}/>
       </div>
     </div>
   )
@@ -91,6 +96,12 @@ const Remind = ({id}) => {
     event.stopPropagation()
     return dispatch(showCalendarWin('remind'))
   }
+
+  const deleteRemindHandler = (event) => {
+    event.stopPropagation()
+    return dispatch(deleteRemind(id))
+  }
+
   return (
     <div
       onClick={showCalendarHandler}
@@ -112,6 +123,11 @@ const Remind = ({id}) => {
               {moment(time.split('|')[0]).format('llll').split(',')[0]},
               {moment(time.split('|')[0]).format('llll').split(',')[1]}
             </div>
+            <div
+              onClick={deleteRemindHandler}
+              className="remind__icon-times">
+              <i className="fas fa-times"/>
+            </div>
           </div>
         }
       </div>
@@ -127,6 +143,90 @@ const Remind = ({id}) => {
 }
 
 Remind.propTypes = {
+  id: PropTypes.string.isRequired,
+}
+
+const Due = ({id}) => {
+  const showCalendar = useSelector((state) => state.system).calendarType
+  const due = useSelector((state) => state.tasks).find((el) => el.id === id).due
+  const dispatch = useDispatch()
+
+  const classes = due ? 'due_active' : ''
+
+  const showCalendarHandler = (event) => {
+    event.stopPropagation()
+    return dispatch(showCalendarWin('due'))
+  }
+
+  const deleteDueHandler = (event) => {
+    event.stopPropagation()
+    return dispatch(deleteDue(id))
+  }
+
+  return (
+    <div
+      onClick={showCalendarHandler}
+      className="due-wrapper">
+      <div className="due">
+        <div className={`due__icon ${classes}`}>
+          <i className="far fa-calendar-alt"/>
+        </div>
+        {!due &&
+          <div className="due__title">
+            Add due date
+          </div>
+        }
+        {due &&
+          <div className={`due__show ${classes}`}>
+            Due {moment(due).format('llll').split(',')[0]}{', '}
+            {moment(due).format('llll').split(',')[1]}{', '}
+            {moment(due).format('llll').split(',')[2].split(' ')[1]}
+            <div
+              onClick={deleteDueHandler}
+              className="due__icon-times">
+              <i className="fas fa-times"/>
+            </div>
+          </div>
+        }
+      </div>
+      {showCalendar === 'due' &&
+        <Calendar
+          title={'Due'}
+          id={id}
+          type="due"
+        />
+      }
+    </div>
+  )
+}
+
+Due.propTypes = {
+  id: PropTypes.string.isRequired,
+}
+
+const Note = ({id}) => {
+  const task = useSelector((state) => state.tasks).filter((el) => el.id === id)
+  const dispatch = useDispatch()
+  const onChangeHandler = (event) => {
+    return dispatch(addNote({
+      id,
+      note: event.target.value.trim(),
+    }))
+  }
+
+  return (
+    <div className="note-wrapper">
+      <Textarea
+        onChange={onChangeHandler}
+        value={task.note}
+        maxRows={15}
+        className="note__textarea"
+        placeholder="Add note"/>
+    </div>
+  )
+}
+
+Note.propTypes = {
   id: PropTypes.string.isRequired,
 }
 

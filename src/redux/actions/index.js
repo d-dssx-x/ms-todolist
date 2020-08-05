@@ -7,6 +7,10 @@ export const SWITCH_IMPRTNT_TASK = 'TASKS/SWITCH_IMPRTNT_TASK'
 export const CHANGE_TITLE_TASK = 'TASKS/CHANGE_TITLE_TASK'
 export const SWITCH_TASKS_IN_LIST = 'TASKS/SWITCH_TASKS_IN_LIST'
 export const ADD_REMIND = 'TASKS/ADD_REMIND'
+export const DELETE_REMIND = 'TASKS/DELETE_REMIND'
+export const ADD_DUE = 'TASKS/ADD_DUE'
+export const DELETE_DUE = 'TASKS/DELETE_DUE'
+export const ADD_NOTE = 'TASKS/ADD_NOTE'
 
 export const SELECT_TASK = 'SYSTEM/SELECT_TASK'
 export const SHOW_CALENDAR = 'SYSTEM/SHOW_CALENDAR'
@@ -106,3 +110,35 @@ export const hideCalendar = () => {
   }
 }
 
+export const addDue = (values) => {
+  return {
+    type: ADD_DUE,
+    values: {
+      id: values.id,
+      due: values.due,
+    },
+  }
+}
+
+export const deleteRemind = (id) => {
+  return {
+    type: DELETE_REMIND,
+    id,
+  }
+}
+export const deleteDue = (id) => {
+  return {
+    type: DELETE_DUE,
+    id,
+  }
+}
+
+export const addNote = (values) => {
+  return {
+    type: ADD_NOTE,
+    values: {
+      id: values.id,
+      note: values.note,
+    },
+  }
+}

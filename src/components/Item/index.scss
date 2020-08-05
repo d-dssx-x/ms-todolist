@@ -34,9 +34,22 @@
   }
 
   &__group {
+    display: flex;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: .6rem;
+  }
+
+  &__list {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+  }
+
+  &__bell {
+    margin-right: 10px;
+    font-size: .65rem;
   }
 
   &__circle {
@@ -87,5 +100,18 @@
     &_imprt {
       color: $main-color;
     }
+  }
+
+  &__due {
+    display: flex;
+    margin-right: 10px;
+  }
+
+  &__calendar {
+    margin-right: 10px;
+  }
+
+  &__note {
+    margin-right: 10px;
   }
 }
