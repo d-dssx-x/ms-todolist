@@ -3,7 +3,9 @@ import {
   SHOW_CALENDAR,
   HIDE_CALENDAR,
   SHOW_MODAL,
-  HIDE_MODAL} from '../actions'
+  HIDE_MODAL,
+  SHOW_LIST_MODAL,
+  HIDE_LIST_MODAL} from '../actions'
 
 const init = {
   selectedTasks: null,
@@ -13,10 +15,26 @@ const init = {
     x: null,
     y: null,
   },
+  modalList: {
+    show: false,
+    top: null,
+    left: null,
+    bottom: null,
+    right: null,
+  },
 }
 
 export const systemReducer = (state = init, action) => {
   switch (action.type) {
+    case HIDE_LIST_MODAL:
+      return {...state, modalList: {
+        top: null,
+        left: null,
+        bottom: null,
+        right: null,
+        show: false}}
+    case SHOW_LIST_MODAL:
+      return {...state, modalList: {...action.values, show: true}}
     case SHOW_MODAL:
       return {...state, modal: {
         show: true,

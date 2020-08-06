@@ -15,12 +15,15 @@ export const ADD_TASK_MYDAY = 'TASKS/ADD_TASK_MYDAY'
 export const DELETE_TASK = 'TASKS/DELETE_TASK'
 export const ADD_TO_MY_DAY_TASK = 'TASKS/ADD_TO_MY_DAY_TASK'
 export const REMOVE_FROM_MY_DAY_TASK = 'TASKS/REMOVE_FROM_MY_DAY_TASK'
+export const MOVE_TASK_TO_LIST = 'TASKS/MOVE_TASK_TO_LIST'
 
 export const SELECT_TASK = 'SYSTEM/SELECT_TASK'
 export const SHOW_CALENDAR = 'SYSTEM/SHOW_CALENDAR'
 export const HIDE_CALENDAR = 'SYSTEM/HIDE_CALENDAR'
 export const SHOW_MODAL = 'SYSTEM/SHOW_MODAL'
 export const HIDE_MODAL = 'SYSTEM/HIDE_MODAL'
+export const SHOW_LIST_MODAL = 'SYSTEM/SHOW_LIST_MODAL'
+export const HIDE_LIST_MODAL = 'SYSTEM/HIDE_LIST_MODAL'
 
 
 export const addNewList = (title) => {
@@ -198,5 +201,34 @@ export const removeFromMyDayTask = (id) => {
   return {
     type: REMOVE_FROM_MY_DAY_TASK,
     id,
+  }
+}
+
+export const moveTaskToList = (values) => {
+  return {
+    type: MOVE_TASK_TO_LIST,
+    values: {
+      id: values.id,
+      listId: values.listId,
+    },
+  }
+}
+
+
+export const showListModal = (values) => {
+  return {
+    type: SHOW_LIST_MODAL,
+    values: {
+      top: values.top || null,
+      left: values.left || null,
+      bottom: values.bottom || null,
+      right: values.right || null,
+    },
+  }
+}
+
+export const hideListModal = () => {
+  return {
+    type: HIDE_LIST_MODAL,
   }
 }

@@ -9,6 +9,7 @@
   box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
   padding: 10px 0;
   animation: openModel .15s ease-in-out forwards;
+
   @keyframes openModel {
     0% {
       transform: scaleY(0);
@@ -75,12 +76,49 @@
     margin-right: 10px;
   }
 
-  &__sell {
-    padding: 10px 0;
+  &__cell {
+    position: relative;
+    padding: 0;
+    margin: 10px 0;
     width: 100%;
+    border-top: 1px solid rgb(150, 150, 150);
+    border-bottom: 1px solid rgb(150, 150, 150);
   }
 
   &__chevron {
     margin-left: auto;
+  }
+}
+
+.list-modal {
+  position: absolute;
+  left: -300px;
+  top: 0;
+  background-color: #fff;
+  z-index: 1000000;
+  width: 250px;
+  max-height: 300px;
+  overflow: auto;
+  box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    @include button;
+    border-radius: none;
+    padding: 10px;
+    width: 100%;
+
+    &:hover {
+      background-color: rgba($color: #000000, $alpha: .1);
+    }
+  }
+  &__icon {
+    margin-right: 10px;
+  }
+
+  &__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

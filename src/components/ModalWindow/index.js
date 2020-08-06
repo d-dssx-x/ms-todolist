@@ -7,7 +7,10 @@ import {
   removeFromMyDayTask,
   hideModal,
   switchDoneTask,
-  switchImprtntTask} from '../../redux/actions'
+  switchImprtntTask,
+  moveTaskToList,
+  showListModal,
+  hideListModal} from '../../redux/actions'
 import PropTypes from 'prop-types'
 
 const ModalWindow = () => {
@@ -36,6 +39,25 @@ const ModalWindow = () => {
     return dispatch(deleteTask(id))
   }
 
+
+  const onMouseOverHandler = (event) => {
+    const hight = document.documentElement.clientHeight
+    const position = {
+      left: -250,
+      top: -60,
+    }
+
+    console.log(event.pageY, hight)
+    if (event.pageX < 350) {
+      position.left = 185
+    }
+    if (event.pageY + 400 > hight) {
+      position.top = -100
+    }
+
+    dispatch(showListModal({...position}))
+  }
+
   return (
     <>
       {modal.show &&
@@ -49,6 +71,7 @@ const ModalWindow = () => {
               title="Mark at important"
               icon="fa-star'"
               onClick={(id) => dispatch(switchImprtntTask(id))}
+              onMouseOver={() => dispatch(hideListModal())}
             />
 
           }
@@ -58,6 +81,7 @@ const ModalWindow = () => {
               title="Remove importance"
               icon="fa-star"
               onClick={(id) => dispatch(switchImprtntTask(id))}
+              onMouseOver={() => dispatch(hideListModal())}
               active
             />
 
@@ -68,6 +92,7 @@ const ModalWindow = () => {
                 title="Add to My Day"
                 icon="fa-sun"
                 onClick={(id) => dispatch(addToMyDayTask(id))}
+                onMouseOver={() => dispatch(hideListModal())}
               />}
           {task.myday &&
             <Button
@@ -76,6 +101,7 @@ const ModalWindow = () => {
               icon="fa-sun"
               onClick={(id)=> dispatch(removeFromMyDayTask(id))}
               active
+              onMouseOver={() => dispatch(hideListModal())}
             />
           }
           {!task.done &&
@@ -85,6 +111,7 @@ const ModalWindow = () => {
               done
               _doneClass
               onClick={(id) => dispatch(switchDoneTask(id))}
+              onMouseOver={() => dispatch(hideListModal())}
             />
           }
           {task.done &&
@@ -94,6 +121,7 @@ const ModalWindow = () => {
               done
               onClick={(id) => dispatch(switchDoneTask(id))}
               active
+              onMouseOver={() => dispatch(hideListModal())}
             />
           }
           <div className="modal__cell">
@@ -102,13 +130,16 @@ const ModalWindow = () => {
               title="Move task to..."
               icon="fa-list"
               showArrow
-              onClick={()=>{console.log('dsadasd')}}/>
+              onClick={null}
+              onMouseOver = {onMouseOverHandler}/>
+            <ModalList id={modal.id}/>
           </div>
           <Button
             id={modal.id}
             title="Delete task"
             icon="fa-trash"
             onClick={deleteHandler}
+            onMouseOver={() => dispatch(hideListModal())}
             isDelete
           />
         </div>
@@ -126,13 +157,16 @@ const Button = ({
   active,
   done,
   _doneClass,
-  showArrow}) => {
+  showArrow,
+  onMouseOver}) => {
   const deleteClass = isDelete ? 'modal__button_delete' : ''
   const activeClass = active ? 'modal__button_active' : ''
   const doneClass = _doneClass ? 'modal__circle_done' : ''
+
   return (
     <div className="modal__wrapper">
       <button
+        onMouseOver={onMouseOver}
         onClick={() => onClick(id)}
         className={`modal__button ${deleteClass} ${activeClass}`}>
         {!done &&
@@ -161,11 +195,78 @@ Button.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string,
   icon: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   isDelete: PropTypes.bool,
   active: PropTypes.bool,
   done: PropTypes.bool,
   _doneClass: PropTypes.bool,
+  showArrow: PropTypes.bool,
+  onMouseOver: PropTypes.func.isRequired,
+}
+
+
+const ModalList = ({id}) => {
+  const lists = useSelector((state) => state.lists)
+      .filter((el) => el.type === 'custom')
+  const dispatch = useDispatch()
+  const modal = useSelector((state) => state.system).modalList
+
+  const moveTask = (id, listId) => {
+    return dispatch(moveTaskToList({
+      id,
+      listId,
+    }))
+  }
+
+  return (
+    <>{modal.show &&
+        <div
+          id='#list'
+          style={{...modal}}
+          className="list-modal">
+          <ListBtn
+            icon="fa-home"
+            title="Tasks"
+          />
+          {lists.map((el, i) => <ListBtn
+            id={id}
+            listId={el.id}
+            key={i}
+            title={el.title}
+            icon="fa-tasks"
+            onClick={moveTask}
+          />)}
+        </div>
+    }
+    </>
+  )
+}
+
+ModalList.propTypes = {
+  id: PropTypes.string.isRequired,
+}
+
+const ListBtn = ({id, listId, icon, title, onClick}) => {
+  return (
+    <button
+      onClick={() => onClick(id, listId)}
+      className="list-modal__button">
+      <div className="list-modal__icon">
+        <i className={`fas ${icon}`}></i>
+      </div>
+      <div className="list-modal__title">
+        {title}
+      </div>
+    </button>
+  )
+}
+
+ListBtn.propTypes = {
+  id: PropTypes.string.isRequired,
+  listId: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+  title: PropTypes.string,
+  onClick: PropTypes.func,
 }
 
 export default ModalWindow

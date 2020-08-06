@@ -9,7 +9,8 @@ import {
   changeTitleList,
   selectTask,
   hideModal,
-  showModal} from '../../redux/actions'
+  showModal,
+  hideListModal} from '../../redux/actions'
 import moment from 'moment'
 
 const Tasks = ({
@@ -53,6 +54,7 @@ const Tasks = ({
 
   useEffect(() => {
     const click = (event) => {
+      dispatch(hideListModal())
       return dispatch(hideModal())
     }
 
@@ -66,7 +68,7 @@ const Tasks = ({
       event.preventDefault()
       const clientHight = document.documentElement.clientHeight
       if (event.target.id.split('-')[0] === 'item') {
-        if (event.pageY + 50 < clientHight) {
+        if (event.pageY + 160 < clientHight) {
           dispatch(showModal({
             x: event.pageX,
             y: event.pageY,
@@ -75,7 +77,7 @@ const Tasks = ({
         } else {
           dispatch(showModal({
             x: event.pageX,
-            y: event.pageY - 50,
+            y: event.pageY - 160,
             id: event.target.id.split('-')[1],
           }))
         }

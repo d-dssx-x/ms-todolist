@@ -13,7 +13,8 @@ import {
   ADD_TASK_MYDAY,
   DELETE_TASK,
   ADD_TO_MY_DAY_TASK,
-  REMOVE_FROM_MY_DAY_TASK} from '../actions'
+  REMOVE_FROM_MY_DAY_TASK,
+  MOVE_TASK_TO_LIST} from '../actions'
 
 const init = [
   {
@@ -29,6 +30,9 @@ const init = [
 
 export const tasksReducer = (state = init, action) => {
   switch (action.type) {
+    case MOVE_TASK_TO_LIST:
+      return state.map((el) => el.id === action.values.id ?
+      {...el, listId: action.values.listId} : el)
     case REMOVE_FROM_MY_DAY_TASK:
       return state.map((el) => el.id === action.id ?
       {...el, myday: false} : el)
