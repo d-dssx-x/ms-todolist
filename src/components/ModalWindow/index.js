@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import './index.scss'
 import {useSelector, useDispatch} from 'react-redux'
 import {
-  deleteTask,
   addToMyDayTask,
   removeFromMyDayTask,
   hideModal,
@@ -10,7 +9,11 @@ import {
   switchImprtntTask,
   moveTaskToList,
   showListModal,
-  hideListModal} from '../../redux/actions'
+  hideListModal,
+  showDeleteAlert,
+  addDueToDay,
+  addDueTomorrow,
+  deleteDue} from '../../redux/actions'
 import PropTypes from 'prop-types'
 
 const ModalWindow = () => {
@@ -40,10 +43,11 @@ const ModalWindow = () => {
 
 
   const deleteHandler = (id) => {
-    dispatch(hideModal())
-    return dispatch(deleteTask(id))
+    return dispatch(showDeleteAlert({
+      type: 'task',
+      id,
+    }))
   }
-
 
   const onMouseOverHandler = (event) => {
     const hight = document.documentElement.clientHeight
@@ -52,10 +56,8 @@ const ModalWindow = () => {
       left: -250,
       top: -60,
     }
-
-    console.log(event.pageY, hight)
     if (width/2 > event.pageX) {
-      position.left = 185
+      position.left = 150
     }
     if (event.pageY + 400 > hight) {
       position.top = listsLength * (- 30)
@@ -133,6 +135,28 @@ const ModalWindow = () => {
           <div className="modal__cell">
             <Button
               id={modal.id}
+              title="Due today"
+              icon="fa-calendar"
+              onClick={(id) => dispatch(addDueToDay(id))}
+              onMouseOver = {() => dispatch(hideListModal())}/>
+            <Button
+              id={modal.id}
+              title="Due tomorrow"
+              icon="fa-calendar-minus"
+              onClick={(id) => dispatch(addDueTomorrow(id))}
+              onMouseOver = {() => dispatch(hideListModal())}/>
+          </div>
+          {task.due &&
+            <Button
+              id={modal.id}
+              title="Remove due day"
+              icon="fa-calendar"
+              onClick={(id) => dispatch(deleteDue(id))}
+              onMouseOver = {() => dispatch(hideListModal())}/>
+          }
+          <div className="modal__cell">
+            <Button
+              id={modal.id}
               title="Move task to..."
               icon="fa-list"
               showArrow
@@ -165,16 +189,17 @@ const Button = ({
   _doneClass,
   showArrow,
   onMouseOver}) => {
-  const deleteClass = isDelete ? 'modal__button_delete' : ''
+  const deleteClass = isDelete ?
+      ['modal__wrapper_delete', 'modal__button_delete'] : ''
   const activeClass = active ? 'modal__button_active' : ''
   const doneClass = _doneClass ? 'modal__circle_done' : ''
 
   return (
-    <div className="modal__wrapper">
+    <div className={`modal__wrapper ${deleteClass[0]}`}>
       <button
         onMouseOver={onMouseOver}
         onClick={() => onClick(id)}
-        className={`modal__button ${deleteClass} ${activeClass}`}>
+        className={`modal__button ${deleteClass[1]} ${activeClass}`}>
         {!done &&
           <div className="modal__icon">
             <i className={`fas ${icon}`}/>

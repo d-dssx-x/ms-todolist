@@ -45,9 +45,8 @@ const Field = ({listId, important, isMyDay}) => {
       if (isMyDay) {
         dispatch(addTaskMyDay({
           title: taskTitle,
-          listId,
+          listId: 'tasks',
           important,
-          due: moment().format('L'),
           created: moment().format('LLLL'),
         }))
         setTaskTitle('')
@@ -56,7 +55,6 @@ const Field = ({listId, important, isMyDay}) => {
           title: taskTitle,
           listId,
           important,
-          created: moment().format('LLLL'),
         }))
         setTaskTitle('')
       }

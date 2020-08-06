@@ -12,7 +12,7 @@ import {
   deleteRemind,
   addNote,
   selectTask,
-  deleteTask} from '../../redux/actions'
+  showDeleteAlert} from '../../redux/actions'
 import PropTypes from 'prop-types'
 import Calendar from '../Calendar'
 import moment from 'moment'
@@ -241,8 +241,10 @@ const Footer = ({id}) => {
   const [title, setTitle] = useState('')
 
   const deleteTaskHandler = () => {
-    dispatch(deleteTask(id))
-    return dispatch(selectTask(null))
+    return dispatch(showDeleteAlert({
+      type: 'task',
+      id,
+    }))
   }
 
   useEffect(() => {

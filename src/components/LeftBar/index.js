@@ -4,8 +4,6 @@ import './index.scss'
 import {Link, useLocation} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {addNewList} from '../../redux/actions'
-import moment from 'moment'
-
 
 const LeftBar = () => {
   const [className, setClassName] = useState('')
@@ -31,7 +29,8 @@ const LeftBar = () => {
   const [active, setActive] = useState({
     todos: false,
     important: false,
-    myDay: false,
+    myday: false,
+    planned: false,
   })
 
   useEffect(() => {
@@ -46,10 +45,10 @@ const LeftBar = () => {
   const tasksSize = tasks.length
   const importantSize = tasks
       .filter((el) => el.important).length
-
-  const currentDay = moment().format('L')
+  const plannedSize = tasks
+      .filter((el) => el.due).length
   const myDaySize = tasks
-      .filter((el) => el.due === currentDay || el.myday).length
+      .filter((el) => el.myday).length
   return (
     <div className={`left-bar ${className}`}>
       <div className="left-bar__header">
@@ -60,12 +59,20 @@ const LeftBar = () => {
         </button>
       </div>
       <div className="left-bar__list">
-        <Link to="/MyDay">
+        <Link to="/myday">
           <Button
-            active={active.myDay}
-            title={'MyDay'}
+            active={active.MyDay}
+            title={'My Day'}
             icon={'fa-sun'}
             size={myDaySize}
+          />
+        </Link>
+        <Link to="/planned">
+          <Button
+            active={active.planned}
+            title={'Planned'}
+            icon={'fa-calendar-alt'}
+            size={plannedSize}
           />
         </Link>
         <Link

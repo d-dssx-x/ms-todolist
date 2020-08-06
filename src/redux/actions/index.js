@@ -1,3 +1,4 @@
+import moment from 'moment'
 export const ADD_LIST = 'LISTS/ADD_LIST'
 export const CHANGE_TITLE_LIST = 'LISTS/CHANGE_TITLE_LIST'
 export const DELETE_LIST = 'LISTS/DELETE_LIST'
@@ -18,6 +19,8 @@ export const ADD_TO_MY_DAY_TASK = 'TASKS/ADD_TO_MY_DAY_TASK'
 export const REMOVE_FROM_MY_DAY_TASK = 'TASKS/REMOVE_FROM_MY_DAY_TASK'
 export const MOVE_TASK_TO_LIST = 'TASKS/MOVE_TASK_TO_LIST'
 export const DELETE_TASKS_BY_LISTID = 'TASKS/DELETE_TASKS_BY_LISTID'
+export const ADD_DUE_TODAY = 'TASKS/ADD_DUE_TODAY'
+export const ADD_DUE_TOMORROW = 'TASKS/ADD_DUE_TOMORROW'
 
 export const SELECT_TASK = 'SYSTEM/SELECT_TASK'
 export const SHOW_CALENDAR = 'SYSTEM/SHOW_CALENDAR'
@@ -45,7 +48,7 @@ export const addTask = (values) => {
       title: values.title,
       listId: values.listId,
       important: values.important,
-      created: values.created,
+      created: moment().format('LLLL'),
     },
   }
 }
@@ -164,8 +167,7 @@ export const addTaskMyDay = (values) => {
       title: values.title,
       listId: values.listId,
       important: values.important,
-      due: values.due,
-      created: values.created,
+      created: moment().format('LLLL'),
     },
   }
 }
@@ -267,4 +269,22 @@ export const deleteTasksByListId = (listId) => {
   }
 }
 
+export const addDueToDay = (id) => {
+  return {
+    type: ADD_DUE_TODAY,
+    values: {
+      id,
+      due: moment().format('L'),
+    },
+  }
+}
 
+export const addDueTomorrow = (id) => {
+  return {
+    type: ADD_DUE_TOMORROW,
+    values: {
+      id,
+      due: moment().add(1, 'day').format('L'),
+    },
+  }
+}

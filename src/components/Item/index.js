@@ -6,7 +6,8 @@ import {
   switchDoneTask,
   switchImprtntTask,
   selectTask,
-  switchTasksInList} from '../../redux/actions'
+  switchTasksInList,
+  hideModal} from '../../redux/actions'
 import {useDrop, useDrag} from 'react-dnd'
 import {DND_ITEM} from '../../types'
 import moment from 'moment'
@@ -50,6 +51,7 @@ const Item = ({
   }
 
   const selectTaskHandler = () => {
+    dispatch(hideModal())
     return dispatch(selectTask(id))
   }
 

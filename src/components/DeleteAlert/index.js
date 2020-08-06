@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import './index.scss'
 import {useSelector, useDispatch} from 'react-redux'
-import {hideDeleteAlert, deleteList, deleteTasksByListId} from '../../redux/actions'
+import {hideDeleteAlert, deleteList, deleteTasksByListId, deleteTask, selectTask} from '../../redux/actions'
 import {Link} from 'react-router-dom'
 
 const DeleteAlert = () => {
@@ -11,11 +11,12 @@ const DeleteAlert = () => {
   const tasks = useSelector((state) => state.tasks)
   const lists = useSelector((state) => state.lists)
   const dispatch = useDispatch()
+
   useEffect(() => {
     if (options.type === 'list') {
       setItem(lists.find((el) => el.id === options.id))
     }
-    if (options.type === 'tasks') {
+    if (options.type === 'task') {
       setItem(tasks.find((el) => el.id === options.id))
     }
   }, [options])
@@ -24,6 +25,11 @@ const DeleteAlert = () => {
     if (options.type === 'list') {
       dispatch(deleteList(options.id))
       dispatch(deleteTasksByListId(options.id))
+      dispatch(hideDeleteAlert())
+    }
+    if (options.type === 'task') {
+      dispatch(deleteTask(options.id))
+      dispatch(selectTask(null))
       dispatch(hideDeleteAlert())
     }
   }
