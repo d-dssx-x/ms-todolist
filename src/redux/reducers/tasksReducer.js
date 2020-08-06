@@ -11,7 +11,9 @@ import {
   DELETE_REMIND,
   ADD_NOTE,
   ADD_TASK_MYDAY,
-  DELETE_TASK} from '../actions'
+  DELETE_TASK,
+  ADD_TO_MY_DAY_TASK,
+  REMOVE_FROM_MY_DAY_TASK} from '../actions'
 
 const init = [
   {
@@ -21,19 +23,18 @@ const init = [
     important: true,
     listId: 'tasks',
     created: '06/08/2020',
-  },
-  {
-    title: 'some 2',
-    id: '2',
-    done: false,
-    important: false,
-    listId: 'tasks',
-    created: '10/10/2020',
+    myday: true,
   },
 ]
 
 export const tasksReducer = (state = init, action) => {
   switch (action.type) {
+    case REMOVE_FROM_MY_DAY_TASK:
+      return state.map((el) => el.id === action.id ?
+      {...el, myday: false} : el)
+    case ADD_TO_MY_DAY_TASK:
+      return state.map((el) => el.id === action.id ?
+      {...el, myday: true} : el)
     case DELETE_TASK:
       return state.filter((el) => el.id !== action.id)
     case ADD_TASK_MYDAY:
@@ -41,10 +42,11 @@ export const tasksReducer = (state = init, action) => {
         title: action.values.title,
         id: Date.now().toString(),
         done: false,
-        listId: action.values.listId,
+        listId: 'tasks',
         important: !!action.values.important,
         due: action.values.due,
         created: action.values.created,
+        myday: true,
       }, ...state]
     case DELETE_DUE:
       return state.map((el) => el.id === action.id ? {...el, due: null} : el)

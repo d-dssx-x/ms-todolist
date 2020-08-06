@@ -1,0 +1,86 @@
+@import '../../scss/mixin';
+@import '../../scss/var';
+
+.modal {
+  position: absolute;
+  z-index: 100000000000;
+  min-width: 150px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+  padding: 10px 0;
+  animation: openModel .15s ease-in-out forwards;
+  @keyframes openModel {
+    0% {
+      transform: scaleY(0);
+    }
+    80% {
+      transform: scaleY(1.1);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
+
+  &__wrapper {
+    padding: 0 10px;
+    &:hover {
+      background-color: rgba($color: #000000, $alpha: .1);
+    }
+  }
+
+  &__button {
+    display: flex;
+    padding: 10px 5px;
+    width: 100%;
+    @include button;
+    border-radius: 0;
+    color: rgb(150, 150, 150);
+    &_delete {
+      border-top: 1px solid #db3a29;
+      color: #db3a29 !important;
+    }
+
+    &_active {
+      color: $main-color;
+      border-color: $main-color !important;
+    }
+
+    &:hover {
+      background-color: rgba($color: #000000, $alpha: .0);
+    }
+  }
+
+  &__circle {
+    position: relative;
+    @include checkCirlce(rgb(150, 150, 150));
+    width: 15px;
+    height: 15px;
+    margin-right: 7px;
+
+    &_done {
+      &::after {
+        left: 3.6px;
+        top: 6.5px;
+        @include  circlePs(2.5px, 45deg, rgb(150, 150, 150));
+      }
+      &::before {
+        right: 3px;
+        top: 6px;
+        @include  circlePs(5px, -45deg, rgb(150, 150, 150));
+      }
+    }
+  }
+
+  &__icon {
+    margin-right: 10px;
+  }
+
+  &__sell {
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  &__chevron {
+    margin-left: auto;
+  }
+}

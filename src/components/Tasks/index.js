@@ -1,11 +1,15 @@
-import React, {useRef} from 'react'
+import React, {useRef, useEffect} from 'react'
 import './index.scss'
 import PropTypes from 'prop-types'
 import Complited from '../Complited'
 import Field from '../Field'
 import Item from '../Item'
 import {useDispatch} from 'react-redux'
-import {changeTitleList, selectTask} from '../../redux/actions'
+import {
+  changeTitleList,
+  selectTask,
+  hideModal,
+  showModal} from '../../redux/actions'
 import moment from 'moment'
 
 const Tasks = ({
@@ -47,8 +51,48 @@ const Tasks = ({
   const currentTime = moment().format('LLLL').split(',')[0] + ', ' +
       moment().format('LLLL').split(',')[1]
 
+  useEffect(() => {
+    const click = (event) => {
+      return dispatch(hideModal())
+    }
+
+    document.addEventListener('click', click)
+
+    return () => document.removeEventListener('click', click)
+  })
+
+  useEffect(() => {
+    const onContext = (event) => {
+      event.preventDefault()
+      const clientHight = document.documentElement.clientHeight
+      if (event.target.id.split('-')[0] === 'item') {
+        if (event.pageY + 50 < clientHight) {
+          dispatch(showModal({
+            x: event.pageX,
+            y: event.pageY,
+            id: event.target.id.split('-')[1],
+          }))
+        } else {
+          dispatch(showModal({
+            x: event.pageX,
+            y: event.pageY - 50,
+            id: event.target.id.split('-')[1],
+          }))
+        }
+        dispatch(selectTask(null))
+        return false
+      }
+    }
+    const target = document.querySelector('#tasks')
+    target.addEventListener('contextmenu', onContext)
+
+    return () => target.removeEventListener('contextmenu', onContext)
+  }, [])
+
+
   return (
     <div
+      id="tasks"
       ref={refBlock}
       onClick={closeRightBarHadnler}
       className="tasks">

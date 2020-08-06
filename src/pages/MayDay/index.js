@@ -5,7 +5,7 @@ import moment from 'moment'
 
 const MyDay = () => {
   const tasks = useSelector((state) => state.tasks)
-      .filter((el) => el.due === moment().format('L'))
+      .filter((el) => el.due === moment().format('L') || el.myday )
   return (
     <Tasks
       tasks={tasks}

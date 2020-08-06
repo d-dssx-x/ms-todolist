@@ -23,7 +23,8 @@ const Item = ({
   listTitle,
   listId,
   currentList,
-  important}) => {
+  important,
+  myday}) => {
   const classes = done ? ['item__circle_done', 'item__title_done'] : ['', '']
   const currentSelected = useSelector((state) => state.system)
   const selectedClass = currentSelected
@@ -78,10 +79,8 @@ const Item = ({
       isDragging: monitor.isDragging(),
     }),
   })
-
   return (
     <div
-      id='#hover'
       style={{opacity: isDragging ? 0 : 1}}
       ref={drag(drop(ref))}
       onClick={selectTaskHandler}
@@ -98,6 +97,11 @@ const Item = ({
           <div className="item__group">
             {showList &&
               <div className="item__list">{titleList}</div>
+            }
+            {myday &&
+              <div className="item__sun">
+                <i className="far fa-sun" />
+              </div>
             }
             {remind &&
               <div className="item__bell">
@@ -131,6 +135,9 @@ const Item = ({
           }
         </div>
       </div>
+      <div
+        id={`item-${id}`}
+        className="wrapper__click"/>
     </div>
   )
 }
@@ -148,6 +155,7 @@ Item.propTypes = {
   due: PropTypes.string,
   note: PropTypes.string,
   currentList: PropTypes.string.isRequired,
+  myday: PropTypes.bool,
 }
 
 export default Item

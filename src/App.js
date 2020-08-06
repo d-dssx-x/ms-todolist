@@ -8,6 +8,7 @@ import RightBar from './components/RightBar'
 import {useSelector} from 'react-redux'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
+import ModalWindow from './components/ModalWindow'
 
 const App = () => {
   const routes = useRouter(true)
@@ -23,6 +24,7 @@ const App = () => {
           <RightBar
             id={system.selectedTasks}
           />}
+          <ModalWindow/>
         </div>
       </DndProvider>
     </BrowserRouter>

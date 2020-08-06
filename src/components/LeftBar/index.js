@@ -49,7 +49,7 @@ const LeftBar = () => {
 
   const currentDay = moment().format('L')
   const myDaySize = tasks
-      .filter((el) => el.due === currentDay).length
+      .filter((el) => el.due === currentDay || el.myday).length
   return (
     <div className={`left-bar ${className}`}>
       <div className="left-bar__header">

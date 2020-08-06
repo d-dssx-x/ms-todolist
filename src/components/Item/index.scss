@@ -5,12 +5,21 @@
 .wrapper {
   width: 100%;
   cursor: pointer;
+  position: relative;
   &:hover {
     background-color: rgba($color: #000000, $alpha: .10);
   }
 
   &_selected {
     background-color: rgba($color: #000000, $alpha: .10);
+  }
+
+  &__click {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
   }
 }
 
@@ -22,15 +31,10 @@
   font-size: 0.85rem;
   margin: 0 10px;
   padding: 10px 0;
-  animation: animationItem .5s ease-in-out forwards;
+  animation: animationItem .2s ease-in-out forwards;
   @keyframes animationItem {
     0% {
-      opacity: 0;
       transform: scale(0);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.1);
     }
     100% {
       transform: scale(1);
@@ -128,4 +132,9 @@
   &__note {
     margin-right: 10px;
   }
+
+  &__sun {
+    margin-right: 10px;
+  }
 }
+
