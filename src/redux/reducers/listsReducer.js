@@ -1,4 +1,4 @@
-import {ADD_LIST, CHANGE_TITLE_LIST} from '../actions'
+import {ADD_LIST, CHANGE_TITLE_LIST, DELETE_LIST} from '../actions'
 
 const init = [
   {
@@ -26,6 +26,8 @@ const init = [
 
 export const listsReducer = (state = init, action) => {
   switch (action.type) {
+    case DELETE_LIST:
+      return state.filter((el) => el.id !== action.id)
     case ADD_LIST:
       return [...state,
         {title: action.title, id: Date.now().toString(), type: 'custom'}]

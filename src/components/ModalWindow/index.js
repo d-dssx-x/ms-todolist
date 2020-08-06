@@ -18,6 +18,11 @@ const ModalWindow = () => {
   const task = useSelector((state) => state.tasks)
       .find((el) => el.id === modal.id)
   const dispatch = useDispatch()
+
+  const lists = useSelector((state) => state.lists)
+      .filter((el) => el.type === 'custom')
+  const listsLength = lists.length > 8 ? 8 : lists.length
+
   const [cord, setCord] = useState({
     x: null,
     y: null,
@@ -42,17 +47,18 @@ const ModalWindow = () => {
 
   const onMouseOverHandler = (event) => {
     const hight = document.documentElement.clientHeight
+    const width = document.documentElement.clientWidth
     const position = {
       left: -250,
       top: -60,
     }
 
     console.log(event.pageY, hight)
-    if (event.pageX < 350) {
+    if (width/2 > event.pageX) {
       position.left = 185
     }
     if (event.pageY + 400 > hight) {
-      position.top = -100
+      position.top = listsLength * (- 30)
     }
 
     dispatch(showListModal({...position}))
@@ -69,7 +75,7 @@ const ModalWindow = () => {
             <Button
               id={modal.id}
               title="Mark at important"
-              icon="fa-star'"
+              icon="fa-star"
               onClick={(id) => dispatch(switchImprtntTask(id))}
               onMouseOver={() => dispatch(hideListModal())}
             />
@@ -227,6 +233,9 @@ const ModalList = ({id}) => {
           <ListBtn
             icon="fa-home"
             title="Tasks"
+            id={id}
+            listId={'tasks'}
+            onClick={moveTask}
           />
           {lists.map((el, i) => <ListBtn
             id={id}

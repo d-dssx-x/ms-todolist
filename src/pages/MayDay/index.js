@@ -12,7 +12,8 @@ const MyDay = () => {
       disabledInput={true}
       title="MyDay"
       isMyDay={true}
-      listId='tasks-myday'/>
+      listId='tasks-myday'
+      disableDelete/>
   )
 }
 

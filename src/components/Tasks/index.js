@@ -10,7 +10,8 @@ import {
   selectTask,
   hideModal,
   showModal,
-  hideListModal} from '../../redux/actions'
+  hideListModal,
+  showDeleteAlert} from '../../redux/actions'
 import moment from 'moment'
 
 const Tasks = ({
@@ -20,7 +21,8 @@ const Tasks = ({
   listId,
   important,
   disabledInput,
-  isMyDay}) => {
+  isMyDay,
+  disableDelete}) => {
   const noDoneTasks = tasks.filter((el) => !el.done)
   const doneTasks = tasks.filter((el) => el.done)
 
@@ -91,20 +93,32 @@ const Tasks = ({
     return () => target.removeEventListener('contextmenu', onContext)
   }, [])
 
-
   return (
     <div
       id="tasks"
       ref={refBlock}
       onClick={closeRightBarHadnler}
       className="tasks">
-      <input
-        ref={ref}
-        disabled={disabledInput}
-        className="tasks__title"
-        value={title}
-        onChange={inputHandler}
-        onKeyPress={blurInputHandler}/>
+      <div className="tasks__header">
+        <input
+          ref={ref}
+          disabled={disabledInput}
+          className="tasks__title"
+          value={title}
+          onChange={inputHandler}
+          onKeyPress={blurInputHandler}
+        />
+        {!disableDelete &&
+          <div
+            onClick={() => dispatch(showDeleteAlert({
+              type: 'list',
+              id: listId,
+            }))}
+            className="tasks__delete">
+            <i className="fas fa-trash" />
+          </div>
+        }
+      </div>
       {isMyDay &&
         <div className="tasks__myday">
           {currentTime}
@@ -144,6 +158,7 @@ Tasks.propTypes = {
   important: PropTypes.bool,
   disabledInput: PropTypes.bool,
   isMyDay: PropTypes.bool,
+  disableDelete: PropTypes.bool,
 }
 
 export default Tasks

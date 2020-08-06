@@ -5,7 +5,9 @@ import {
   SHOW_MODAL,
   HIDE_MODAL,
   SHOW_LIST_MODAL,
-  HIDE_LIST_MODAL} from '../actions'
+  HIDE_LIST_MODAL,
+  SHOW_DELETE_ALERT,
+  HIDE_DELETE_ALERT} from '../actions'
 
 const init = {
   selectedTasks: null,
@@ -22,10 +24,21 @@ const init = {
     bottom: null,
     right: null,
   },
+  deleteAlert: {
+    show: false,
+    type: null,
+    id: null,
+  },
 }
 
 export const systemReducer = (state = init, action) => {
   switch (action.type) {
+    case SHOW_DELETE_ALERT:
+      return {...state, deleteAlert:
+        {show: true, type: action.values.type, id: action.values.id}}
+    case HIDE_DELETE_ALERT:
+      return {...state, deleteAlert:
+      {show: false, type: null, id: null}}
     case HIDE_LIST_MODAL:
       return {...state, modalList: {
         top: null,

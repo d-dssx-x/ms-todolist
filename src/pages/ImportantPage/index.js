@@ -13,7 +13,8 @@ const ImportantPage = () => {
       title="Important"
       tasks={tasks}
       listId='tasks'
-      important/>
+      important
+      disableDelete/>
   )
 }
 

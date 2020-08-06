@@ -9,6 +9,7 @@ import {useSelector} from 'react-redux'
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import ModalWindow from './components/ModalWindow'
+import DeleteAlert from './components/DeleteAlert'
 
 const App = () => {
   const routes = useRouter(true)
@@ -26,6 +27,7 @@ const App = () => {
           />}
           <ModalWindow/>
         </div>
+        <DeleteAlert />
       </DndProvider>
     </BrowserRouter>
   )

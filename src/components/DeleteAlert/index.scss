@@ -1,0 +1,62 @@
+@import '../../scss/mixin';
+@import '../../scss/var';
+.delete-alert {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000000;
+  background-color: rgba($color: #000000, $alpha: .5);
+
+  &__block {
+    background-color: #fff;
+    padding: 10px;
+    max-width: 350px;
+  }
+
+  &__title {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: .8rem;
+  }
+
+  &__item {
+    font-style: italic;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  &__button {
+    @include button;
+    margin-right: 10px;
+    background-color: $main-gray-color;
+    padding: 10px 0;
+    width: 45%;
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      opacity: .5;
+    }
+
+    &_delete {
+      background-color: #db3a29;
+      color: #fff;
+      width: 100%;
+    }
+
+    &_link {
+      width: 45%;
+    }
+  }
+}
