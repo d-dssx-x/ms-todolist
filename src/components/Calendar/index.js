@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './index.scss'
 import moment from 'moment'
 import {useDispatch, useSelector} from 'react-redux'
@@ -14,7 +14,17 @@ const Calendar = ({id, title, type, isTime}) => {
 
   const totalDay = moment().add(targetMonth, 'month').daysInMonth()
 
-  const [selectedDay, setSelectedDay] = useState(task.remind)
+  const [selectedDay, setSelectedDay] = useState('')
+
+  useEffect(() => {
+    if (type === 'remind') {
+      setSelectedDay(task.remind)
+    }
+    if (type === 'due') {
+      setSelectedDay(task.due)
+    }
+  }, [])
+
 
   const arr = new Array(totalDay).fill(0).map((el, i) => el = i + 1)
 

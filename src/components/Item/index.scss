@@ -123,6 +123,14 @@
   &__due {
     display: flex;
     margin-right: 10px;
+
+    &_today {
+      color: $main-color;
+    }
+
+    &_over {
+      color: #db3a29;
+    }
   }
 
   &__calendar {

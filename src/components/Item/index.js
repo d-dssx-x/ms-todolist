@@ -40,6 +40,19 @@ const Item = ({
 
   const showList = listTitle === titleList ? false : true
 
+  const toDayClass = moment().format('L') === moment(due).format('L') ?
+      'item__due_today' : ''
+  const calendarOption = {
+    lastDay: '[Yesterday]',
+    sameDay: '[Today]',
+    nextDay: '[Tomorrow]',
+    lastWeek: '[last] dddd',
+    nextWeek: 'dddd',
+    sameElse: 'L',
+  }
+
+
+  const overDue = moment().format('L') > moment(due).format('L')
   const doneHandler = (event) => {
     event.stopPropagation()
     return dispatch(switchDoneTask(id))
@@ -111,12 +124,23 @@ const Item = ({
               </div>
             }
             {due &&
-              <div className="item__due">
-                <div className="item__calendar">
-                  <i className="far fa-calendar-alt"/>
-                </div>
-                Due {moment(due).format('ll')}
-              </div>
+              <>
+                {!overDue &&
+                <div className={`item__due ${toDayClass}`}>
+                  <div className="item__calendar">
+                    <i className="far fa-calendar-alt"/>
+                  </div>
+                Due {moment(due).calendar(null, calendarOption)}
+                </div>}
+                {overDue &&
+                  <div className={`item__due item__due_over`}>
+                    <div className="item__calendar">
+                      <i className="far fa-calendar-alt"/>
+                    </div>
+                Overdue {moment(due).calendar(null, calendarOption)}
+                  </div>
+                }
+              </>
             }
             {note &&
               <div className="item__note">

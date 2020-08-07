@@ -155,8 +155,11 @@ const Due = ({id}) => {
   const showCalendar = useSelector((state) => state.system).calendarType
   const due = useSelector((state) => state.tasks).find((el) => el.id === id).due
   const dispatch = useDispatch()
+  const overDue = moment().format('L') > moment(due).format('L')
 
   const classes = due ? 'due_active' : ''
+
+  const classIcon = overDue ? 'due__show_over' : ''
 
   const showCalendarHandler = (event) => {
     event.stopPropagation()
@@ -167,13 +170,20 @@ const Due = ({id}) => {
     event.stopPropagation()
     return dispatch(deleteDue(id))
   }
-
+  const calendarOption = {
+    lastDay: '[Yesterday]',
+    sameDay: '[Today]',
+    nextDay: '[Tomorrow]',
+    lastWeek: '[last] dddd',
+    nextWeek: 'dddd',
+    sameElse: 'L',
+  }
   return (
     <div
       onClick={showCalendarHandler}
       className="due-wrapper">
       <div className="due">
-        <div className={`due__icon ${classes}`}>
+        <div className={`due__icon ${classes} ${classIcon}`}>
           <i className="far fa-calendar-alt"/>
         </div>
         {!due &&
@@ -182,16 +192,28 @@ const Due = ({id}) => {
           </div>
         }
         {due &&
-          <div className={`due__show ${classes}`}>
-            Due {moment(due).format('llll').split(',')[0]}{', '}
-            {moment(due).format('llll').split(',')[1]}{', '}
-            {moment(due).format('llll').split(',')[2].split(' ')[1]}
-            <div
-              onClick={deleteDueHandler}
-              className="due__icon-times">
-              <i className="fas fa-times"/>
-            </div>
-          </div>
+          <>
+            {!overDue &&
+              <div className={`due__show ${classes}`}>
+              Due {moment(due).calendar(null, calendarOption)}
+                <div
+                  onClick={deleteDueHandler}
+                  className="due__icon-times">
+                  <i className="fas fa-times"/>
+                </div>
+              </div>
+            }
+            {
+              <div className={`due__show due__show_over`}>
+              Overdue {moment(due).calendar(null, calendarOption)}
+                <div
+                  onClick={deleteDueHandler}
+                  className="due__icon-times">
+                  <i className="fas fa-times"/>
+                </div>
+              </div>
+            }
+          </>
         }
       </div>
       {showCalendar === 'due' &&
