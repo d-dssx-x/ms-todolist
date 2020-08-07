@@ -36,7 +36,7 @@ const ModalWindow = () => {
     const height = document.documentElement.clientHeight
     console.log(modal.y)
     if (modal.show) {
-      if (height - modal.y < 300) {
+      if (height - modal.y < 350) {
         return setCord({
           x: modal.x,
           y: modal.y - 200,
@@ -198,7 +198,7 @@ const Button = ({
   showArrow,
   onMouseOver}) => {
   const deleteClass = isDelete ?
-      ['modal__wrapper_delete', 'modal__button_delete'] : ''
+      ['modal__wrapper_delete', 'modal__button_delete'] : ['', '']
   const activeClass = active ? 'modal__button_active' : ''
   const doneClass = _doneClass ? 'modal__circle_done' : ''
 

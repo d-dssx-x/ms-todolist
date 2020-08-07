@@ -52,7 +52,6 @@ const PlannedPage = () => {
 
   return (
     <div
-      id="tasks"
       className="tasks">
       <div className="tasks__header">
         <input
@@ -64,7 +63,9 @@ const PlannedPage = () => {
         listId="tasks"
         isPlanned
         placeholder="Add a task due today"/>
-      <div className="block">
+      <div
+        id="tasks"
+        className="block">
         {!!todayTasks.length &&
         <TasksBlock
           _open

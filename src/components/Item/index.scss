@@ -18,11 +18,9 @@
     top: 0;
     bottom: 0;
   }
-}
 
-.wrapper__hover {
   &:hover {
-    background-color: rgba($color: #000000, $alpha: .10);
+    background-color: rgba($color: #000000, $alpha: .1);
   }
 }
 

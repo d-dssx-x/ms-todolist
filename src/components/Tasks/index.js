@@ -69,21 +69,12 @@ const Tasks = ({
   useEffect(() => {
     const onContext = (event) => {
       event.preventDefault()
-      const clientHight = document.documentElement.clientHeight
       if (event.target.id.split('-')[0] === 'item') {
-        if (event.pageY + 160 < clientHight) {
-          dispatch(showModal({
-            x: event.pageX,
-            y: event.pageY,
-            id: event.target.id.split('-')[1],
-          }))
-        } else {
-          dispatch(showModal({
-            x: event.pageX,
-            y: event.pageY - 160,
-            id: event.target.id.split('-')[1],
-          }))
-        }
+        dispatch(showModal({
+          x: event.pageX,
+          y: event.pageY - 160,
+          id: event.target.id.split('-')[1],
+        }))
         dispatch(selectTask(null))
         return false
       }
@@ -96,7 +87,6 @@ const Tasks = ({
 
   return (
     <div
-      id="tasks"
       ref={refBlock}
       onClick={closeRightBarHadnler}
       className="tasks">
@@ -130,7 +120,9 @@ const Tasks = ({
         listId={listId}
         important={important}
         placeholder="Add a task"/>
-      <div className="block">
+      <div
+        id="tasks"
+        className="block">
         {noDoneTasks.map((el, i) => <Item
           listTitle={title}
           showList={showList}
