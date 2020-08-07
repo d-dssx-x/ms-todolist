@@ -87,7 +87,6 @@ RightBar.propTypes = {
   id: PropTypes.string.isRequired,
 }
 
-
 const Remind = ({id}) => {
   const showCalendar = useSelector((state) => state.system).calendarType
   const dispatch = useDispatch()

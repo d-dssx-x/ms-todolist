@@ -54,14 +54,18 @@ const PlannedPage = () => {
     <div
       id="tasks"
       className="tasks">
-      <div className="tasks__title">
-        Planned
+      <div className="tasks__header">
+        <input
+          className="tasks__title"
+          disabled
+          defaultValue="Palnned"/>
       </div>
       <Field
         listId="tasks"
         isPlanned
         placeholder="Add a task due today"/>
-      {!!todayTasks.length &&
+      <div className="block">
+        {!!todayTasks.length &&
         <TasksBlock
           _open
           title="Today"
@@ -69,31 +73,32 @@ const PlannedPage = () => {
           showList={true}
           tasks={todayTasks}
         />
-      }
-      {!!tomorrowTasks.length &&
+        }
+        {!!tomorrowTasks.length &&
         <TasksBlock
           title="Tomorrow"
           currentList={'tasks'}
           showList={true}
           tasks={tomorrowTasks}
         />
-      }
-      {!!earlierTasks.length &&
+        }
+        {!!earlierTasks.length &&
         <TasksBlock
           title="Earlier"
           currentList={'tasks'}
           showList={true}
           tasks={earlierTasks}
         />
-      }
-      {!!otherTasks.length &&
+        }
+        {!!otherTasks.length &&
         <TasksBlock
           title="Later"
           currentList={'tasks'}
           showList={true}
           tasks={otherTasks}
         />
-      }
+        }
+      </div>
     </div>
   )
 }

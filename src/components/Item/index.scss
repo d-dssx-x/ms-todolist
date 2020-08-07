@@ -6,9 +6,6 @@
   width: 100%;
   cursor: pointer;
   position: relative;
-  &:hover {
-    background-color: rgba($color: #000000, $alpha: .10);
-  }
 
   &_selected {
     background-color: rgba($color: #000000, $alpha: .10);
@@ -20,6 +17,12 @@
     right: 5%;
     top: 0;
     bottom: 0;
+  }
+}
+
+.wrapper__hover {
+  &:hover {
+    background-color: rgba($color: #000000, $alpha: .10);
   }
 }
 

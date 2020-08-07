@@ -33,8 +33,16 @@ const ModalWindow = () => {
 
 
   useEffect(() => {
+    const height = document.documentElement.clientHeight
+    console.log(modal.y)
     if (modal.show) {
-      setCord({
+      if (height - modal.y < 300) {
+        return setCord({
+          x: modal.x,
+          y: modal.y - 200,
+        })
+      }
+      return setCord({
         x: modal.x,
         y: modal.y,
       })

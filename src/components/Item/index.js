@@ -42,6 +42,7 @@ const Item = ({
 
   const toDayClass = moment().format('L') === moment(due).format('L') ?
       'item__due_today' : ''
+
   const calendarOption = {
     lastDay: '[Yesterday]',
     sameDay: '[Today]',
@@ -51,8 +52,8 @@ const Item = ({
     sameElse: 'L',
   }
 
-
   const overDue = moment().format('L') > moment(due).format('L')
+
   const doneHandler = (event) => {
     event.stopPropagation()
     return dispatch(switchDoneTask(id))

@@ -41,9 +41,10 @@
     text-overflow: ellipsis;
     resize: none;
     color: $main-color;
+
     &:disabled {
       background-color: inherit;
-      color: inherit;
+      color: $main-color;
       border: none;
     }
   }
