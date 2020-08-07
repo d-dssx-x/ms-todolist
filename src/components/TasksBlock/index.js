@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import Item from '../Item'
 import './index.scss'
 
-const Complited = ({tasks, showList, currentList}) => {
-  const [open, setOpen] = useState(false)
+const TasksBlock = ({title, tasks, showList, currentList, _open}) => {
+  const [open, setOpen] = useState(_open || false)
 
   const openHandler = () => {
     return setOpen((prev) => !prev)
@@ -24,7 +24,7 @@ const Complited = ({tasks, showList, currentList}) => {
           }
         </div>
         <div className="complited__title">
-          Complited
+          {title}
         </div>
       </div>
       {open &&
@@ -40,11 +40,14 @@ const Complited = ({tasks, showList, currentList}) => {
   )
 }
 
-Complited.propTypes = {
+TasksBlock.propTypes = {
+  title: PropTypes.string,
   tasks: PropTypes.array.isRequired,
   showList: PropTypes.bool,
   currentList: PropTypes.string.isRequired,
+  _open: PropTypes.bool,
 }
 
 
-export default Complited
+export default TasksBlock
+

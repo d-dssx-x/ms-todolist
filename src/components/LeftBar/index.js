@@ -42,7 +42,7 @@ const LeftBar = () => {
       .filter((el) => el.type !== 'main')
 
   const tasks = useSelector((state) => state.tasks)
-  const tasksSize = tasks.filter((el) => el.id === 'tasks').length
+  const tasksSize = tasks.filter((el) => el.listId === 'tasks').length
   const importantSize = tasks
       .filter((el) => el.important).length
   const plannedSize = tasks

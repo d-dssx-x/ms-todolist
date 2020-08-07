@@ -13,7 +13,6 @@ export const DELETE_REMIND = 'TASKS/DELETE_REMIND'
 export const ADD_DUE = 'TASKS/ADD_DUE'
 export const DELETE_DUE = 'TASKS/DELETE_DUE'
 export const ADD_NOTE = 'TASKS/ADD_NOTE'
-export const ADD_TASK_MYDAY = 'TASKS/ADD_TASK_MYDAY'
 export const DELETE_TASK = 'TASKS/DELETE_TASK'
 export const ADD_TO_MY_DAY_TASK = 'TASKS/ADD_TO_MY_DAY_TASK'
 export const REMOVE_FROM_MY_DAY_TASK = 'TASKS/REMOVE_FROM_MY_DAY_TASK'
@@ -46,8 +45,10 @@ export const addTask = (values) => {
     type: ADD_TASK,
     values: {
       title: values.title,
-      listId: values.listId,
-      important: values.important,
+      listId: values.listId || 'tasks',
+      important: values.important || false,
+      myday: values.myday || false,
+      due: values.due || null,
       created: moment().format('LLLL'),
     },
   }
@@ -156,18 +157,6 @@ export const addNote = (values) => {
     values: {
       id: values.id,
       note: values.note,
-    },
-  }
-}
-
-export const addTaskMyDay = (values) => {
-  return {
-    type: ADD_TASK_MYDAY,
-    values: {
-      title: values.title,
-      listId: values.listId,
-      important: values.important,
-      created: moment().format('LLLL'),
     },
   }
 }

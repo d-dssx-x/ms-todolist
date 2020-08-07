@@ -2,10 +2,10 @@ import React, {useState, useRef, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import './index.scss'
 import {useDispatch} from 'react-redux'
-import {addTask, addTaskMyDay} from '../../redux/actions'
+import {addTask} from '../../redux/actions'
 import moment from 'moment'
 
-const Field = ({listId, important, isMyDay}) => {
+const Field = ({listId, important, isMyDay, placeholder, isPlanned}) => {
   const ref = useRef(null)
   const [active, setActive] = useState(true)
   const classes = active ? 'field_active' : ''
@@ -42,22 +42,14 @@ const Field = ({listId, important, isMyDay}) => {
 
   const onKeyPressHandler = (event) => {
     if (event.key === 'Enter' && taskTitle.trim() !== '') {
-      if (isMyDay) {
-        dispatch(addTaskMyDay({
-          title: taskTitle,
-          listId: 'tasks',
-          important,
-          created: moment().format('LLLL'),
-        }))
-        setTaskTitle('')
-      } else {
-        dispatch(addTask({
-          title: taskTitle,
-          listId,
-          important,
-        }))
-        setTaskTitle('')
-      }
+      dispatch(addTask({
+        title: taskTitle,
+        listId,
+        important,
+        myday: isMyDay,
+        due: isPlanned ? moment().format('L') : null,
+      }))
+      setTaskTitle('')
     }
   }
 
@@ -76,7 +68,7 @@ const Field = ({listId, important, isMyDay}) => {
         <div
           id="field-desc"
           className="field__desc">
-          Add a task
+          {placeholder}
         </div>
       </>}
       {active &&
@@ -89,7 +81,7 @@ const Field = ({listId, important, isMyDay}) => {
           ref={ref}
           id="input-field"
           className="field__input"
-          placeholder="Add a task"/>
+          placeholder={placeholder}/>
       </>}
     </div>
   )
@@ -99,6 +91,8 @@ Field.propTypes = {
   listId: PropTypes.string.isRequired,
   important: PropTypes.bool,
   isMyDay: PropTypes.bool,
+  placeholder: PropTypes.string,
+  isPlanned: PropTypes.bool,
 }
 
 export default Field

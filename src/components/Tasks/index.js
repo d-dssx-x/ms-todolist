@@ -1,7 +1,6 @@
 import React, {useRef, useEffect} from 'react'
 import './index.scss'
 import PropTypes from 'prop-types'
-import Complited from '../Complited'
 import Field from '../Field'
 import Item from '../Item'
 import {useDispatch} from 'react-redux'
@@ -13,6 +12,7 @@ import {
   hideListModal,
   showDeleteAlert} from '../../redux/actions'
 import moment from 'moment'
+import TasksBlock from '../TasksBlock'
 
 const Tasks = ({
   title,
@@ -56,7 +56,7 @@ const Tasks = ({
       moment().format('LLLL').split(',')[1]
 
   useEffect(() => {
-    const click = (event) => {
+    const click = () => {
       dispatch(hideListModal())
       return dispatch(hideModal())
     }
@@ -128,7 +128,8 @@ const Tasks = ({
       <Field
         isMyDay={isMyDay}
         listId={listId}
-        important={important}/>
+        important={important}
+        placeholder="Add a task"/>
       <div className="block">
         {noDoneTasks.map((el, i) => <Item
           listTitle={title}
@@ -140,10 +141,11 @@ const Tasks = ({
           {...el}/>)
         }
         {!!doneTasks.length &&
-          <Complited
+          <TasksBlock
             tasks={doneTasks}
             showList={showList}
             currentList={listId}
+            title="Complited"
           />
         }
       </div>
