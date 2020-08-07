@@ -203,7 +203,7 @@ const Due = ({id}) => {
                 </div>
               </div>
             }
-            {
+            {overDue &&
               <div className={`due__show due__show_over`}>
               Overdue {moment(due).calendar(null, calendarOption)}
                 <div
