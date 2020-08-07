@@ -24,6 +24,7 @@ const Tasks = ({
   isMyDay,
   disableDelete}) => {
   const noDoneTasks = tasks.filter((el) => !el.done)
+
   const doneTasks = tasks.filter((el) => el.done)
 
   const dispatch = useDispatch()

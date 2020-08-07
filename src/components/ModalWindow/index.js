@@ -160,7 +160,7 @@ const ModalWindow = () => {
               title="Move task to..."
               icon="fa-list"
               showArrow
-              onClick={null}
+              onClick={() => {}}
               onMouseOver = {onMouseOverHandler}/>
             <ModalList id={modal.id}/>
           </div>

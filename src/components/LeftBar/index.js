@@ -42,7 +42,7 @@ const LeftBar = () => {
       .filter((el) => el.type !== 'main')
 
   const tasks = useSelector((state) => state.tasks)
-  const tasksSize = tasks.length
+  const tasksSize = tasks.filter((el) => el.id === 'tasks').length
   const importantSize = tasks
       .filter((el) => el.important).length
   const plannedSize = tasks
@@ -61,7 +61,7 @@ const LeftBar = () => {
       <div className="left-bar__list">
         <Link to="/myday">
           <Button
-            active={active.MyDay}
+            active={active.myday}
             title={'My Day'}
             icon={'fa-sun'}
             size={myDaySize}

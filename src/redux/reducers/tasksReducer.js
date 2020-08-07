@@ -38,7 +38,7 @@ export const tasksReducer = (state = init, action) => {
       return state.map((el) => el.id === action.values.id ?
       {...el, due: action.values.due} : el)
     case DELETE_TASKS_BY_LISTID:
-      return state.filter((el) => el.id !== action.listId)
+      return state.filter((el) => el.listId !== action.listId)
     case MOVE_TASK_TO_LIST:
       return state.map((el) => el.id === action.values.id ?
       {...el, listId: action.values.listId} : el)

@@ -23,13 +23,13 @@ const DeleteAlert = () => {
 
   const onClickDeleteHandler = () => {
     if (options.type === 'list') {
-      dispatch(deleteList(options.id))
       dispatch(deleteTasksByListId(options.id))
+      dispatch(deleteList(options.id))
       dispatch(hideDeleteAlert())
     }
     if (options.type === 'task') {
-      dispatch(deleteTask(options.id))
       dispatch(selectTask(null))
+      dispatch(deleteTask(options.id))
       dispatch(hideDeleteAlert())
     }
   }
@@ -47,6 +47,7 @@ const DeleteAlert = () => {
             <button
               onClick={() => dispatch(hideDeleteAlert())}
               className="delete-alert__button">Canel</button>
+            {options.type === 'list' &&
             <Link
               className="delete-alert__button_link"
               to="/">
@@ -54,6 +55,12 @@ const DeleteAlert = () => {
                 onClick={onClickDeleteHandler}
                 className="delete-alert__button delete-alert__button_delete">Delete</button>
             </Link>
+            }
+            {options.type === 'task' &&
+            <button
+              onClick={onClickDeleteHandler}
+              className="delete-alert__button delete-alert__button_delete">Delete</button>
+            }
           </div>
         </div>
       </div>}
