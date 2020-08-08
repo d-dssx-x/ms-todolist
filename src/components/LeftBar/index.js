@@ -27,7 +27,7 @@ const LeftBar = () => {
   }
 
   const [active, setActive] = useState({
-    todos: false,
+    tasks: false,
     important: false,
     myday: false,
     planned: false,
@@ -58,12 +58,12 @@ const LeftBar = () => {
           <i className="fas fa-bars"/>
         </button>
       </div>
-      <div className="left-bar__list">
+      <nav className="left-bar__list">
         <Link to="/myday">
           <Button
             active={active.myday}
             title={'My Day'}
-            icon={'fa-sun'}
+            icon={'far fa-sun'}
             size={myDaySize}
           />
         </Link>
@@ -71,18 +71,18 @@ const LeftBar = () => {
           <Button
             active={active.planned}
             title={'Planned'}
-            icon={'fa-calendar-alt'}
+            icon={'far fa-calendar'}
             size={plannedSize}
           />
         </Link>
         <Link
           className="link"
-          to="/todos"
+          to="/tasks"
         >
           <Button
-            active={active.todos}
+            active={active.tasks}
             title={'Tasks'}
-            icon={'fa-home'}
+            icon={'fas fa-home'}
             size={tasksSize}
           />
         </Link>
@@ -93,7 +93,7 @@ const LeftBar = () => {
           <Button
             active={active.important}
             title={'Important'}
-            icon={'fa-star'}
+            icon={'far fa-star'}
             size={importantSize}/>
         </Link>
         <div className="custom">
@@ -106,7 +106,7 @@ const LeftBar = () => {
           }
           <AddButton show={onOpenAddButton} />
         </div>
-      </div>
+      </nav>
     </div>
   )
 }
@@ -117,7 +117,7 @@ const Button = ({title, icon, active, size}) => {
   return (
     <div className={`left-bar__category ${classes}`}>
       <div className="left-bar__btn-cat">
-        <i className={`fas ${icon}`}/>
+        <i className={icon}/>
       </div>
       <span className="left-bar__title">{title}</span>
       <span className="left-bar__size">{size !== 0 && size}</span>
@@ -142,7 +142,7 @@ const ButtonCustom = ({active, title, id}) => {
       <Button
         active={active}
         title={title}
-        icon={'fa-tasks'}
+        icon={'fas fa-tasks'}
         size={size}
       />
     </Link>

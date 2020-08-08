@@ -72,7 +72,7 @@ const Tasks = ({
       if (event.target.id.split('-')[0] === 'item') {
         dispatch(showModal({
           x: event.pageX,
-          y: event.pageY - 160,
+          y: event.pageY,
           id: event.target.id.split('-')[1],
         }))
         dispatch(selectTask(null))

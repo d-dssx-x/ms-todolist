@@ -5,6 +5,7 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: absolute;
   top: 0;
   left: 0;
@@ -18,5 +19,66 @@
     color: #fff;
 
     margin-left: 20px;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 400px;
+    background-color: #ffff;
+
+    border-radius: $border-radius;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 5px;
+    background-color: rgba($color: $main-color, $alpha: .15);
+    border: none;
+    padding: 5px 30px;
+
+    &::placeholder {
+      opacity: 0;
+    }
+
+    &:focus {
+      outline: none;
+      border: none;
+      border-radius: $border-radius;
+      background-color: #fff;
+
+      &::placeholder {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__button {
+    position: absolute;
+    padding: 10px;
+    color: $main-black-color;
+
+    &:hover {
+      cursor: pointer;
+      opacity: .5;
+    }
+
+    &_left {
+      left: 0;
+      &:hover {
+        opacity: 1;
+        cursor: auto;
+      }
+    }
+
+    &_right {
+      right: 0;
+     
+    }
+  }
+
+  &__setting {
+    width: 100px;
   }
 }

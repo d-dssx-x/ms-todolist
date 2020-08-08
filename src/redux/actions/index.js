@@ -173,7 +173,7 @@ export const showModal = (values) => {
     type: SHOW_MODAL,
     values: {
       x: values.x,
-      y: values.y,
+      y: values.y - 100,
       id: values.id,
     },
   }

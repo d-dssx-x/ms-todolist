@@ -6,13 +6,14 @@ import ImportantPage from './pages/ImportantPage'
 import CustomPage from './pages/CustomPage'
 import MyDayPage from './pages/MayDayPage'
 import PlannedPage from './pages/PlannedPage'
+import SearchPage from './pages/SearchPage'
 
 
 export const useRouter = (isAuth) => {
   if (isAuth) {
     return (
       <Switch>
-        <Route path="/todos">
+        <Route path="/tasks">
           <TaskPage />
         </Route>
         <Route path="/important">
@@ -26,6 +27,9 @@ export const useRouter = (isAuth) => {
         </Route>
         <Route path="/planned">
           <PlannedPage />
+        </Route>
+        <Route path="/search/:name?">
+          <SearchPage />
         </Route>
         <Redirect to="/todos"/>
       </Switch>

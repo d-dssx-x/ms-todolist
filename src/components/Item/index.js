@@ -25,7 +25,8 @@ const Item = ({
   listId,
   currentList,
   important,
-  myday}) => {
+  myday,
+  disableDrag}) => {
   const classes = done ? ['item__circle_done', 'item__title_done'] : ['', '']
   const currentSelected = useSelector((state) => state.system)
   const selectedClass = currentSelected
@@ -77,6 +78,8 @@ const Item = ({
       if (!ref.current) {
         return
       }
+      if (disableDrag) return
+
       const dragI = item.index
       const hoverI = index
 
@@ -181,8 +184,9 @@ Item.propTypes = {
   remind: PropTypes.string,
   due: PropTypes.string,
   note: PropTypes.string,
-  currentList: PropTypes.string.isRequired,
+  currentList: PropTypes.string,
   myday: PropTypes.bool,
+  disableDrag: PropTypes.bool,
 }
 
 export default Item

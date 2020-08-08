@@ -6,10 +6,18 @@ import {createStore, compose, applyMiddleware} from 'redux'
 import {rootReducer} from './redux/reducers'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
+import {loadStore, saveStore} from './redux/localStore'
 
-const store = createStore(rootReducer,
+const prevState = loadStore()
+
+const store = createStore(rootReducer, prevState,
     compose(window.__REDUX_DEVTOOLS_EXTENSION__&&
-    window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk)))
+    window.__REDUX_DEVTOOLS_EXTENSION__(),
+    applyMiddleware(thunk)))
+
+store.subscribe(() => {
+  saveStore(store.getState())
+})
 
 
 const AppWrapper = () => (

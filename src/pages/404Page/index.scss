@@ -7,4 +7,8 @@
   justify-content: center;
   align-items: center;
   margin-top: $header-height;
+
+  &_tasks {
+    padding-bottom: 150px;
+  }
 }

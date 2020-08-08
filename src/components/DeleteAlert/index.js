@@ -19,7 +19,7 @@ const DeleteAlert = () => {
     if (options.type === 'task') {
       setItem(tasks.find((el) => el.id === options.id))
     }
-  }, [options])
+  }, [options, lists, tasks])
 
   const onClickDeleteHandler = () => {
     if (options.type === 'list') {

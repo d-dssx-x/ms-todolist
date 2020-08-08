@@ -34,7 +34,6 @@ const ModalWindow = () => {
 
   useEffect(() => {
     const height = document.documentElement.clientHeight
-    console.log(modal.y)
     if (modal.show) {
       if (height - modal.y < 350) {
         return setCord({
@@ -62,14 +61,15 @@ const ModalWindow = () => {
     const width = document.documentElement.clientWidth
     const position = {
       left: -250,
-      top: -60,
+      top: 200,
     }
     if (width/2 > event.pageX) {
       position.left = 150
     }
-    if (event.pageY + 400 > hight) {
-      position.top = listsLength * (- 30)
+    if (event.pageY + 400 > hight && listsLength > 2) {
+      position.top = listsLength * (-5)
     }
+
 
     dispatch(showListModal({...position}))
   }
@@ -85,7 +85,7 @@ const ModalWindow = () => {
             <Button
               id={modal.id}
               title="Mark at important"
-              icon="fa-star"
+              icon="fas fa-star"
               onClick={(id) => dispatch(switchImprtntTask(id))}
               onMouseOver={() => dispatch(hideListModal())}
             />
@@ -95,7 +95,7 @@ const ModalWindow = () => {
             <Button
               id={modal.id}
               title="Remove importance"
-              icon="fa-star"
+              icon="far fa-star"
               onClick={(id) => dispatch(switchImprtntTask(id))}
               onMouseOver={() => dispatch(hideListModal())}
               active
@@ -106,7 +106,7 @@ const ModalWindow = () => {
               <Button
                 id={modal.id}
                 title="Add to My Day"
-                icon="fa-sun"
+                icon="fas fa-sun"
                 onClick={(id) => dispatch(addToMyDayTask(id))}
                 onMouseOver={() => dispatch(hideListModal())}
               />}
@@ -114,7 +114,7 @@ const ModalWindow = () => {
             <Button
               id={modal.id}
               title="Remove from My Day"
-              icon="fa-sun"
+              icon="far fa-sun"
               onClick={(id)=> dispatch(removeFromMyDayTask(id))}
               active
               onMouseOver={() => dispatch(hideListModal())}
@@ -144,29 +144,29 @@ const ModalWindow = () => {
             <Button
               id={modal.id}
               title="Due today"
-              icon="fa-calendar"
+              icon="far fa-calendar"
               onClick={(id) => dispatch(addDueToDay(id))}
               onMouseOver = {() => dispatch(hideListModal())}/>
             <Button
               id={modal.id}
               title="Due tomorrow"
-              icon="fa-calendar-minus"
+              icon="far fa-calendar-minus"
               onClick={(id) => dispatch(addDueTomorrow(id))}
               onMouseOver = {() => dispatch(hideListModal())}/>
-          </div>
-          {task.due &&
+            {task.due &&
             <Button
               id={modal.id}
               title="Remove due day"
-              icon="fa-calendar"
+              icon="far fa-calendar-times"
               onClick={(id) => dispatch(deleteDue(id))}
               onMouseOver = {() => dispatch(hideListModal())}/>
-          }
+            }
+          </div>
           <div className="modal__cell">
             <Button
               id={modal.id}
               title="Move task to..."
-              icon="fa-list"
+              icon="fas fa-list"
               showArrow
               onClick={() => {}}
               onMouseOver = {onMouseOverHandler}/>
@@ -175,7 +175,7 @@ const ModalWindow = () => {
           <Button
             id={modal.id}
             title="Delete task"
-            icon="fa-trash"
+            icon="fas fa-trash"
             onClick={deleteHandler}
             onMouseOver={() => dispatch(hideListModal())}
             isDelete
@@ -210,7 +210,7 @@ const Button = ({
         className={`modal__button ${deleteClass[1]} ${activeClass}`}>
         {!done &&
           <div className="modal__icon">
-            <i className={`fas ${icon}`}/>
+            <i className={icon}/>
           </div>
         }
         {done &&
@@ -260,7 +260,7 @@ const ModalList = ({id}) => {
   return (
     <>{modal.show &&
         <div
-          id='#list'
+          id='list'
           style={{...modal}}
           className="list-modal">
           <ListBtn

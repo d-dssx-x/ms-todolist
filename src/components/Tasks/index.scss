@@ -41,6 +41,7 @@
     text-overflow: ellipsis;
     resize: none;
     color: $main-color;
+    font-weight: 400;
 
     &:disabled {
       background-color: inherit;
