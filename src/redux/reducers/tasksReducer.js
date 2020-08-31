@@ -20,13 +20,22 @@ import {
 
 const init = [
   {
-    title: 'some 1',
+    title: 'Right Click Me',
     id: '1',
     done: false,
     important: true,
     listId: 'tasks',
     created: '06/08/2020',
     myday: true,
+  },
+  {
+    title: 'Drag me',
+    id: '2',
+    done: false,
+    important: true,
+    listId: 'tasks',
+    created: '06/08/2020',
+    myday: false,
   },
 ]
 

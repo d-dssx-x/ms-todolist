@@ -12,8 +12,8 @@ const init = [
     type: 'main',
   },
   {
-    title: 'Add',
-    id: 'add',
+    title: 'Your custom',
+    id: 'your',
     type: 'custom',
   },
   {
