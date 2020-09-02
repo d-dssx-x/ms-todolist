@@ -269,12 +269,13 @@ const Footer = ({id}) => {
   }
 
   useEffect(() => {
+    console.log('Render')
     if (moment(task.created).format('L') === moment().format('L')) {
       return setTitle('Created Today')
     } else {
       setTitle(`Created on ${moment(task.created).calendar()}`)
     }
-  }, [])
+  }, [task.created])
   return (
     <div className="footer-bar">
       <div
