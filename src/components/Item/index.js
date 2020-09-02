@@ -39,7 +39,7 @@ const Item = ({
   const titleList = useSelector((state) => state.lists)
       .find((el) => el.id === listId).title
 
-  const showList = listTitle === titleList ? false : true
+  const showList = listTitle === titleList
 
   const toDayClass = moment().format('L') === moment(due).format('L') ?
       'item__due_today' : ''
@@ -148,7 +148,7 @@ const Item = ({
             }
             {note &&
               <div className="item__note">
-                <i className="far fa-sticky-note"></i>
+                <i className="far fa-sticky-note"/>
               </div>
             }
           </div>

@@ -123,7 +123,7 @@ const ModalWindow = () => {
           {!task.done &&
             <Button
               id={modal.id}
-              title="Mark as complited"
+              title="Mark as completed"
               done
               _doneClass
               onClick={(id) => dispatch(switchDoneTask(id))}
@@ -133,7 +133,7 @@ const ModalWindow = () => {
           {task.done &&
             <Button
               id={modal.id}
-              title="Mark not complited"
+              title="Mark not completed"
               done
               onClick={(id) => dispatch(switchDoneTask(id))}
               active

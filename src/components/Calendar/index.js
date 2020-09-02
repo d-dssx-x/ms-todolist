@@ -95,13 +95,13 @@ const Calendar = ({id, title, type, isTime}) => {
             role="button"
             onClick={onPressToolUpBtn}
             className="calendar__button">
-            <i className="fas fa-arrow-up"></i>
+            <i className="fas fa-arrow-up"/>
           </div>
           <div
             role="button"
             onClick={onPressToolDownBtn}
             className="calendar__button">
-            <i className="fas fa-arrow-down"></i>
+            <i className="fas fa-arrow-down"/>
           </div>
         </div>
       </div>

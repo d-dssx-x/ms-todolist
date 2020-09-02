@@ -46,7 +46,7 @@ const Tasks = ({
     }
   }
 
-  const closeRightBarHadnler = (event) => {
+  const closeRightBarHandler = (event) => {
     if (event.target === refBlock.current) {
       dispatch(selectTask(null))
     }
@@ -88,7 +88,7 @@ const Tasks = ({
   return (
     <div
       ref={refBlock}
-      onClick={closeRightBarHadnler}
+      onClick={closeRightBarHandler}
       className="tasks">
       <div className="tasks__header">
         <input
@@ -137,7 +137,7 @@ const Tasks = ({
             tasks={doneTasks}
             showList={showList}
             currentList={listId}
-            title="Complited"
+            title="Completed"
           />
         }
       </div>

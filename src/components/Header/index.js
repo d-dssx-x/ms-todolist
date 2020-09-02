@@ -33,7 +33,7 @@ const Header = () => {
       <h2 className="header__logo">To Do List</h2>
       <div className="header__input-wrapper">
         <div className="header__button header__button_left">
-          <i className="fas fa-search"></i>
+          <i className="fas fa-search"/>
         </div>
         <input
           onChange={onChangeHandler}
@@ -46,7 +46,7 @@ const Header = () => {
           <i className="fas fa-times"/>
         </div>
       </div>
-      <div className="header__setting"></div>
+      <div className="header__setting"/>
     </header>
   )
 }

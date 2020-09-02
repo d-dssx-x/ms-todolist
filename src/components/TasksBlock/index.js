@@ -14,8 +14,8 @@ const TasksBlock = ({title, tasks, showList, currentList, _open}) => {
     <>
       <div
         onClick={openHandler}
-        className="complited">
-        <div className="complited__icon">
+        className="completed">
+        <div className="completed__icon">
           {!open &&
             <i className="fas fa-angle-right"/>
           }
@@ -23,7 +23,7 @@ const TasksBlock = ({title, tasks, showList, currentList, _open}) => {
             <i className="fas fa-angle-down"/>
           }
         </div>
-        <div className="complited__title">
+        <div className="completed__title">
           {title}
         </div>
       </div>
