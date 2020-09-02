@@ -18,9 +18,9 @@ const SearchPage = () => {
   useEffect(() => {
     const onContext = (event) => {
       event.preventDefault()
-      const clientHight = document.documentElement.clientHeight
+      const clientHeight = document.documentElement.clientHeight
       if (event.target.id.split('-')[0] === 'item') {
-        if (event.pageY + 160 < clientHight) {
+        if (event.pageY + 160 < clientHeight) {
           dispatch(showModal({
             x: event.pageX,
             y: event.pageY,
