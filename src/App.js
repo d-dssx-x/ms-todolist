@@ -12,6 +12,7 @@ import DeleteAlert from './components/DeleteAlert'
 import './index.scss'
 
 const App = () => {
+  // TODO: Make server side
   const routes = useRouter(true)
   const system = useSelector((state) => state.system)
   return (

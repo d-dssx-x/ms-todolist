@@ -156,9 +156,9 @@ const Due = ({id}) => {
   const dispatch = useDispatch()
   const overDue = moment().format('L') > moment(due).format('L')
 
-  const classes = due ? 'due_active' : ''
+  const classActive = due ? 'due_active' : ''
 
-  const classIcon = overDue ? 'due__show_over' : ''
+  const classOverDue = overDue ? 'due__show_over' : ''
 
   const showCalendarHandler = (event) => {
     event.stopPropagation()
@@ -182,7 +182,7 @@ const Due = ({id}) => {
       onClick={showCalendarHandler}
       className="due-wrapper">
       <div className="due">
-        <div className={`due__icon ${classes} ${classIcon}`}>
+        <div className={`due__icon ${classActive} ${classOverDue}`}>
           <i className="far fa-calendar-alt"/>
         </div>
         {!due &&
@@ -191,28 +191,14 @@ const Due = ({id}) => {
           </div>
         }
         {due &&
-          <>
-            {!overDue &&
-              <div className={`due__show ${classes}`}>
-              Due {moment(due).calendar(null, calendarOption)}
-                <div
-                  onClick={deleteDueHandler}
-                  className="due__icon-times">
-                  <i className="fas fa-times"/>
-                </div>
-              </div>
-            }
-            {overDue &&
-              <div className={`due__show due__show_over`}>
-              Overdue {moment(due).calendar(null, calendarOption)}
-                <div
-                  onClick={deleteDueHandler}
-                  className="due__icon-times">
-                  <i className="fas fa-times"/>
-                </div>
-              </div>
-            }
-          </>
+          <div className={`due__show ${classOverDue}`}>
+            Overdue {moment(due).calendar(null, calendarOption)}
+            <div
+              onClick={deleteDueHandler}
+              className="due__icon-times">
+              <i className="fas fa-times"/>
+            </div>
+          </div>
         }
       </div>
       {showCalendar === 'due' &&
@@ -256,6 +242,15 @@ Note.propTypes = {
   id: PropTypes.string.isRequired,
 }
 
+// TODO: Make tags selector
+const Tags = ({id}) => {
+  return (
+    <div className="tag-wrapper">
+      
+    </div>
+  )
+}
+
 const Footer = ({id}) => {
   const dispatch = useDispatch()
   const task = useSelector((state) => state.tasks).find((el) => el.id === id)
@@ -269,7 +264,6 @@ const Footer = ({id}) => {
   }
 
   useEffect(() => {
-    console.log('Render')
     if (moment(task.created).format('L') === moment().format('L')) {
       return setTitle('Created Today')
     } else {

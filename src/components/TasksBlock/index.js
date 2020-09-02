@@ -6,6 +6,8 @@ import './index.scss'
 const TasksBlock = ({title, tasks, showList, currentList, _open}) => {
   const [open, setOpen] = useState(_open || false)
 
+  const classIcon = open ? 'down' : 'right'
+
   const openHandler = () => {
     return setOpen((prev) => !prev)
   }
@@ -16,12 +18,7 @@ const TasksBlock = ({title, tasks, showList, currentList, _open}) => {
         onClick={openHandler}
         className="completed">
         <div className="completed__icon">
-          {!open &&
-            <i className="fas fa-angle-right"/>
-          }
-          {open &&
-            <i className="fas fa-angle-down"/>
-          }
+          <i className={`fas fa-angle-${classIcon}`}/>
         </div>
         <div className="completed__title">
           {title}
