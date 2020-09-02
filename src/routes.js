@@ -31,7 +31,7 @@ export const useRouter = (isAuth) => {
         <Route path="/search/:name?">
           <SearchPage />
         </Route>
-        <Redirect to="/todos"/>
+        <Redirect to="/tasks"/>
       </Switch>
     )
   }
