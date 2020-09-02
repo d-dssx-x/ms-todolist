@@ -1,7 +1,6 @@
 @import '../../scss/var';
 @import '../../scss/mixin';
 
-
 .left-bar {
   margin-top: $header-height;
   display: flex;
@@ -46,15 +45,14 @@
     overflow-y: auto !important;
     overflow-x: hidden !important;
     height: 100%;
-    
+
   }
   &__category {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 5px 15px;
+    padding: 5px 5px;
     font-size: 0.8rem;
-
     &:hover {
       background-color: #fff;
     }
@@ -67,16 +65,26 @@
 
   &__btn-cat {
     display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    width: 35px;
     font-size: .9rem;
   }
+
+  &__text {
+    flex-shrink: 0;
+    display: flex;
+    width: 145px;
+    justify-content: space-between;
+    margin-left: 5px;
+  }
+
   &__title {
-    margin: 0 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   &__size {
-    margin-left: auto;
     padding: 0 0.5px;
   }
 
@@ -97,7 +105,7 @@
       height: 100%;
     }
   }
-  
+
 }
 .custom {
   margin-top: 50px;

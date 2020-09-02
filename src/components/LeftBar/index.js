@@ -119,8 +119,10 @@ const Button = ({title, icon, active, size}) => {
       <div className="left-bar__btn-cat">
         <i className={icon}/>
       </div>
-      <span className="left-bar__title">{title}</span>
-      <span className="left-bar__size">{size !== 0 && size}</span>
+      <div className="left-bar__text">
+        <div className="left-bar__title">{title}</div>
+        <div className="left-bar__size">{size !== 0 && size}</div>
+      </div>
     </div>
   )
 }
