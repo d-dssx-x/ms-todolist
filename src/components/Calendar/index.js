@@ -148,8 +148,8 @@ Calendar.propTypes = {
 const Day = ({currentDay, selected, day, onClick}) => {
   const classCurrent = currentDay === day ?
       'calendar__day-wrapper_current' : ''
-  const selectedFromat = selected ? selected.split('|')[0] : ''
-  const classSelected = selectedFromat === day ? 'calendar__day_selected' : ''
+  const selectedFormat = selected ? selected.split('|')[0] : ''
+  const classSelected = selectedFormat === day ? 'calendar__day_selected' : ''
 
   const number = Number(day.split('/')[1])
 
