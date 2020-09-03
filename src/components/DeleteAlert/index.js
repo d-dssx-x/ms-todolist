@@ -1,8 +1,12 @@
-/* eslint-disable max-len */
 import React, {useState, useEffect} from 'react'
 import './index.scss'
 import {useSelector, useDispatch} from 'react-redux'
-import {hideDeleteAlert, deleteList, deleteTasksByListId, deleteTask, selectTask} from '../../redux/actions'
+import {
+  hideDeleteAlert,
+  deleteList,
+  deleteTasksByListId,
+  deleteTask,
+  selectTask} from '../../redux/actions'
 import {Link} from 'react-router-dom'
 
 const DeleteAlert = () => {
@@ -53,13 +57,17 @@ const DeleteAlert = () => {
               to="/">
               <button
                 onClick={onClickDeleteHandler}
-                className="delete-alert__button delete-alert__button_delete">Delete</button>
+                className="delete-alert__button delete-alert__button_delete">
+                  Delete
+              </button>
             </Link>
             }
             {options.type === 'task' &&
             <button
               onClick={onClickDeleteHandler}
-              className="delete-alert__button delete-alert__button_delete">Delete</button>
+              className="delete-alert__button delete-alert__button_delete">
+                Delete
+            </button>
             }
           </div>
         </div>
