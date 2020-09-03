@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import './index.scss'
 import {useSelector, useDispatch} from 'react-redux'
 import {
   addToMyDayTask,
@@ -15,6 +14,7 @@ import {
   addDueTomorrow,
   deleteDue} from '../../redux/actions'
 import PropTypes from 'prop-types'
+import './index.scss'
 
 const ModalWindow = () => {
   const modal = useSelector((state) => state.system).modal
@@ -214,7 +214,7 @@ const Button = ({
           </div>
         }
         {done &&
-          <div className={`modal__circle ${doneClass} ${activeClass}`}></div>
+          <div className={`modal__circle ${doneClass} ${activeClass}`}/>
         }
         <div className="modal__title">
           {title}
@@ -294,7 +294,7 @@ const ListBtn = ({id, listId, icon, title, onClick}) => {
       onClick={() => onClick(id, listId)}
       className="list-modal__button">
       <div className="list-modal__icon">
-        <i className={`fas ${icon}`}></i>
+        <i className={`fas ${icon}`}/>
       </div>
       <div className="list-modal__title">
         {title}
