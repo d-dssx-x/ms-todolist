@@ -7,29 +7,41 @@ import CustomPage from './pages/CustomPage'
 import MyDayPage from './pages/MayDayPage'
 import PlannedPage from './pages/PlannedPage'
 import SearchPage from './pages/SearchPage'
-
+import Wrapper from './Wrapper'
 
 export const useRouter = (isAuth) => {
   if (isAuth) {
     return (
       <Switch>
         <Route path="/tasks">
-          <TaskPage />
+          <Wrapper>
+            <TaskPage />
+          </Wrapper>
         </Route>
         <Route path="/important">
-          <ImportantPage />
+          <Wrapper>
+            <ImportantPage />
+          </Wrapper>
         </Route>
         <Route path="/list/:name?">
-          <CustomPage />
+          <Wrapper>
+            <CustomPage />
+          </Wrapper>
         </Route>
         <Route path="/myday">
-          <MyDayPage />
+          <Wrapper>
+            <MyDayPage />
+          </Wrapper>
         </Route>
         <Route path="/planned">
-          <PlannedPage />
+          <Wrapper>
+            <PlannedPage />
+          </Wrapper>
         </Route>
         <Route path="/search/:name?">
-          <SearchPage />
+          <Wrapper>
+            <SearchPage />
+          </Wrapper>
         </Route>
         <Redirect to="/tasks"/>
       </Switch>

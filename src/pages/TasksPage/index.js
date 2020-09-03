@@ -1,6 +1,6 @@
 import React from 'react'
-import Tasks from '../../components/Tasks'
 import {useSelector} from 'react-redux'
+import Tasks from '../../components/Tasks'
 
 
 const TasksPage = () => {

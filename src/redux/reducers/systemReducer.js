@@ -7,7 +7,12 @@ import {
   SHOW_LIST_MODAL,
   HIDE_LIST_MODAL,
   SHOW_DELETE_ALERT,
-  HIDE_DELETE_ALERT} from '../actions'
+  HIDE_DELETE_ALERT, REGISTRATION,
+  SET_ALERT,
+  CLEAR_ALERT,
+  LOGIN,
+  LOGOUT,
+} from '../actions'
 
 const init = {
   selectedTasks: null,
@@ -29,6 +34,8 @@ const init = {
     type: null,
     id: null,
   },
+  token: null,
+  alertMsg: null,
 }
 
 export const systemReducer = (state = init, action) => {
@@ -68,6 +75,16 @@ export const systemReducer = (state = init, action) => {
       return {...state, calendarType: action.calendarType}
     case HIDE_CALENDAR:
       return {...state, calendarType: null}
+    case SET_ALERT:
+      return {...state, alertMsg: action.alertMsg}
+    case CLEAR_ALERT:
+      return {...state, alertMsg: null}
+    case REGISTRATION:
+      return {...state}
+    case LOGIN:
+      return {...state, token: action.token}
+    case LOGOUT:
+      return {...state, token: null}
     default:
       return state
   }

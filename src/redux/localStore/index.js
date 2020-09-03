@@ -44,13 +44,22 @@ const init = {
   },
   tasks: [
     {
-      title: 'some 1',
+      title: 'Right Click Me',
       id: '1',
       done: false,
       important: true,
       listId: 'tasks',
       created: '06/08/2020',
       myday: true,
+    },
+    {
+      title: 'Drag me',
+      id: '2',
+      done: false,
+      important: true,
+      listId: 'tasks',
+      created: '06/08/2020',
+      myday: false,
     },
   ],
 }
@@ -68,13 +77,37 @@ export const saveStore = (store) => {
 export const loadStore = () => {
   try {
     const store = localStorage.getItem('react-todo-ms-app')
-
     if (store === null) {
       return init
     }
-
     return JSON.parse(store)
   } catch (err) {
     console.log(err)
   }
 }
+//
+// const NAME = 'token-react-ms-todo'
+//
+// export const loadToken = () => {
+//   try {
+//     return JSON.parse(localStorage.getItem(NAME))
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
+//
+// export const saveToken = (token) => {
+//   try {
+//     return localStorage.setItem(NAME, JSON.stringify(token))
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
+//
+// export const clearToken = () => {
+//   try {
+//     return localStorage.clear()
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }

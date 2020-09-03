@@ -1,16 +1,23 @@
 import React, {useState, useEffect} from 'react'
 import './index.scss'
 import {useHistory, useLocation} from 'react-router-dom'
+import {useDispatch} from "react-redux";
+import {logout} from "../../redux/actions";
 
 
 const Header = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const {pathname} = useLocation()
   const [prevPath, setPrevPath] = useState('')
   const [searchTitle, setSearchTitle] = useState('')
 
   const onChangeHandler = (event) => {
     return setSearchTitle(event.target.value)
+  }
+
+  const logoutHandler = () => {
+    return dispatch(logout())
   }
 
   useEffect(() => {
@@ -47,6 +54,12 @@ const Header = () => {
         </div>
       </div>
       <div className="header__setting"/>
+      <div
+        role="button"
+        onClick={logoutHandler}
+        className="header__logout">
+        <i className="fas fa-sign-out-alt"/>
+      </div>
     </header>
   )
 }

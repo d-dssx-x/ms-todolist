@@ -78,6 +78,16 @@
   }
 
   &__setting {
-    width: 100px;
+    //width: 100px;
+  }
+
+  &__logout {
+    font-size: 25px;
+    color: #fff;
+    padding: 0 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

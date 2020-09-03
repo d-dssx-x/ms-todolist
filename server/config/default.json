@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "mongoUri": "mongodb+srv://ddssxx:KILLyou@cluster0.xnhqk.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwt": "somekey"
+}
