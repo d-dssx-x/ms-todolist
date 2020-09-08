@@ -1,23 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
+import PropTypes from 'prop-types'
+import moment from 'moment'
 import {
-  addToMyDayTask,
-  removeFromMyDayTask,
   hideModal,
-  switchDoneTask,
-  switchImprtntTask,
-  moveTaskToList,
   showListModal,
   hideListModal,
   showDeleteAlert,
-  addDueToDay,
-  addDueTomorrow,
-  deleteDue} from '../../redux/actions'
-import PropTypes from 'prop-types'
+  patchTasks,
+} from '../../redux/actions'
 import './index.scss'
 
 const ModalWindow = () => {
-  const modal = useSelector((state) => state.system).modal
+  const {modal, token} = useSelector((state) => state.system)
   const task = useSelector((state) => state.tasks)
       .find((el) => el.id === modal.id)
   const dispatch = useDispatch()
@@ -57,7 +52,7 @@ const ModalWindow = () => {
   }
 
   const onMouseOverHandler = (event) => {
-    const hight = document.documentElement.clientHeight
+    const height = document.documentElement.clientHeight
     const width = document.documentElement.clientWidth
     const position = {
       left: -250,
@@ -66,7 +61,7 @@ const ModalWindow = () => {
     if (width/2 > event.pageX) {
       position.left = 150
     }
-    if (event.pageY + 400 > hight && listsLength > 2) {
+    if (event.pageY + 400 > height && listsLength > 2) {
       position.top = listsLength * (-5)
     }
 
@@ -86,7 +81,10 @@ const ModalWindow = () => {
               id={modal.id}
               title="Mark at important"
               icon="fas fa-star"
-              onClick={(id) => dispatch(switchImprtntTask(id))}
+              onClick={(id) => dispatch(patchTasks(token, {
+                id,
+                important: true,
+              }))}
               onMouseOver={() => dispatch(hideListModal())}
             />
 
@@ -96,7 +94,10 @@ const ModalWindow = () => {
               id={modal.id}
               title="Remove importance"
               icon="far fa-star"
-              onClick={(id) => dispatch(switchImprtntTask(id))}
+              onClick={(id) => dispatch(patchTasks(token, {
+                id,
+                important: false,
+              }))}
               onMouseOver={() => dispatch(hideListModal())}
               active
             />
@@ -107,7 +108,10 @@ const ModalWindow = () => {
                 id={modal.id}
                 title="Add to My Day"
                 icon="fas fa-sun"
-                onClick={(id) => dispatch(addToMyDayTask(id))}
+                onClick={(id) => dispatch(patchTasks(token, {
+                  id,
+                  myday: true,
+                }))}
                 onMouseOver={() => dispatch(hideListModal())}
               />}
           {task.myday &&
@@ -115,7 +119,9 @@ const ModalWindow = () => {
               id={modal.id}
               title="Remove from My Day"
               icon="far fa-sun"
-              onClick={(id)=> dispatch(removeFromMyDayTask(id))}
+              onClick={(id)=> dispatch(patchTasks(token, {
+                myday: false,
+              }))}
               active
               onMouseOver={() => dispatch(hideListModal())}
             />
@@ -126,7 +132,10 @@ const ModalWindow = () => {
               title="Mark as completed"
               done
               _doneClass
-              onClick={(id) => dispatch(switchDoneTask(id))}
+              onClick={(id) => dispatch(patchTasks(token, {
+                id,
+                done: true,
+              }))}
               onMouseOver={() => dispatch(hideListModal())}
             />
           }
@@ -135,7 +144,10 @@ const ModalWindow = () => {
               id={modal.id}
               title="Mark not completed"
               done
-              onClick={(id) => dispatch(switchDoneTask(id))}
+              onClick={(id) => dispatch(patchTasks(token, {
+                id,
+                done: false,
+              }))}
               active
               onMouseOver={() => dispatch(hideListModal())}
             />
@@ -145,20 +157,29 @@ const ModalWindow = () => {
               id={modal.id}
               title="Due today"
               icon="far fa-calendar"
-              onClick={(id) => dispatch(addDueToDay(id))}
+              onClick={(id) => dispatch(patchTasks(token, {
+                id,
+                due: moment().format('L'),
+              }))}
               onMouseOver = {() => dispatch(hideListModal())}/>
             <Button
               id={modal.id}
               title="Due tomorrow"
               icon="far fa-calendar-minus"
-              onClick={(id) => dispatch(addDueTomorrow(id))}
+              onClick={(id) => dispatch(patchTasks(token, {
+                id,
+                due: moment().add(1, 'day').format('L'),
+              }))}
               onMouseOver = {() => dispatch(hideListModal())}/>
             {task.due &&
             <Button
               id={modal.id}
               title="Remove due day"
               icon="far fa-calendar-times"
-              onClick={(id) => dispatch(deleteDue(id))}
+              onClick={(id) => dispatch(patchTasks(token, {
+                id,
+                due: '',
+              }))}
               onMouseOver = {() => dispatch(hideListModal())}/>
             }
           </div>
@@ -248,20 +269,20 @@ const ModalList = ({id}) => {
   const lists = useSelector((state) => state.lists)
       .filter((el) => el.type === 'custom')
   const dispatch = useDispatch()
-  const modal = useSelector((state) => state.system).modalList
+  const {modalList, token} = useSelector((state) => state.system)
 
   const moveTask = (id, listId) => {
-    return dispatch(moveTaskToList({
+    return dispatch(patchTasks(token, {
       id,
       listId,
     }))
   }
 
   return (
-    <>{modal.show &&
+    <>{modalList.show &&
         <div
           id='list'
-          style={{...modal}}
+          style={{...modalList}}
           className="list-modal">
           <ListBtn
             icon="fa-home"

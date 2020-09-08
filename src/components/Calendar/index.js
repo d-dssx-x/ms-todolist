@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react'
 import './index.scss'
 import moment from 'moment'
 import {useDispatch, useSelector} from 'react-redux'
-import {addRemind, hideCalendar, addDue} from '../../redux/actions'
+import {addRemind, hideCalendar, addDue, patchTasks} from '../../redux/actions'
 import PropTypes from 'prop-types'
 
 const Calendar = ({id, title, type, isTime}) => {
+  const {token} = useSelector((state) => state.system)
   const dispatch = useDispatch()
   const task = useSelector((state) => state.tasks).find((el) => el.id === id)
   const [targetMonth, setTargetMonth] = useState(0)
@@ -50,13 +51,13 @@ const Calendar = ({id, title, type, isTime}) => {
 
   const saveHandler = () => {
     if (type === 'remind' && selectedDay) {
-      dispatch(addRemind({
+      dispatch(patchTasks(token, {
         id,
         remind: selectedDay + '|' + timeSet.hours + ':' + timeSet.minutes,
       }))
       return dispatch(hideCalendar())
     } else if (type === 'due' && selectedDay) {
-      dispatch(addDue({
+      dispatch(patchTasks(token, {
         id,
         due: selectedDay,
       }))

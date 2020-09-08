@@ -10,6 +10,8 @@ const PORT = config.get('port')
 const MONGO_URI = config.get('mongoUri')
 
 app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/lists', require('./routes/lists.routes'))
+app.use('/api/tasks', require('./routes/tasks.routes'))
 
 async function start() {
   try {
@@ -17,7 +19,7 @@ async function start() {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
     })
 
     app.listen(PORT, (e) => {

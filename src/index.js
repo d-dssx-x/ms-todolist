@@ -10,9 +10,9 @@ import App from './App'
 import './index.scss'
 
 
-const prevState = loadStore()
+// const prevState = loadStore()
 
-const store = createStore(rootReducer, prevState,
+const store = createStore(rootReducer,
     compose(applyMiddleware(thunk),
         window.__REDUX_DEVTOOLS_EXTENSION__&&
       window.__REDUX_DEVTOOLS_EXTENSION__()))

@@ -3,16 +3,13 @@ import Textarea from 'react-textarea-autosize'
 import './index.scss'
 import {useSelector, useDispatch} from 'react-redux'
 import {
-  changeTitleTask,
-  switchDoneTask,
-  switchImprtntTask,
   showCalendarWin,
   hideCalendar,
-  deleteDue,
   deleteRemind,
-  addNote,
   selectTask,
-  showDeleteAlert} from '../../redux/actions'
+  showDeleteAlert,
+  patchTasks,
+} from '../../redux/actions'
 import PropTypes from 'prop-types'
 import Calendar from '../Calendar'
 import moment from 'moment'
@@ -21,26 +18,34 @@ import moment from 'moment'
 const RightBar = ({id}) => {
   const {title, done, important} = useSelector((state) => state.tasks)
       .find((el) => el.id === id)
-
+  const [titleState, setTitleState] = useState(title)
   const classDone = done ? 'right-bar__circle_done': ''
-
   const classImprtnt = important ? 'right-bar__icon_imprt' : ''
-
   const dispatch = useDispatch()
+  const {token} = useSelector((state) => state.system)
 
   const textareaHandler = (event) => {
-    return dispatch(changeTitleTask({
+    return setTitleState(event.target.value.trim())
+  }
+
+  const saveTitleOnServer = () => {
+    return dispatch(patchTasks(token, {
       id,
-      title: event.target.value,
+      title: titleState,
+    }))
+  }
+  const onPressDoneHandler = () => {
+    return dispatch(patchTasks(token, {
+      id,
+      done: !done,
     }))
   }
 
-  const onPressDoneHandler = () => {
-    return dispatch(switchDoneTask(id))
-  }
-
   const importantHandler = () => {
-    return dispatch(switchImprtntTask(id))
+    return dispatch(patchTasks(token, {
+      id,
+      important: !important,
+    }))
   }
 
   return (
@@ -57,8 +62,9 @@ const RightBar = ({id}) => {
             maxRows={5}
             minRows={1}
             className="right-bar__title"
-            value={title}
+            value={titleState}
             onChange={textareaHandler}
+            onBlur={saveTitleOnServer}
           />
           <div
             role="button"
@@ -88,7 +94,7 @@ RightBar.propTypes = {
 }
 
 const Remind = ({id}) => {
-  const showCalendar = useSelector((state) => state.system).calendarType
+  const {calendarType, token} = useSelector((state) => state.system)
   const dispatch = useDispatch()
 
   const time = useSelector((state) => state.tasks)
@@ -103,7 +109,10 @@ const Remind = ({id}) => {
 
   const deleteRemindHandler = (event) => {
     event.stopPropagation()
-    return dispatch(deleteRemind(id))
+    return dispatch(patchTasks(token, {
+      id,
+      remind: '',
+    }))
   }
 
   return (
@@ -135,7 +144,7 @@ const Remind = ({id}) => {
           </div>
         }
       </div>
-      {showCalendar === 'remind' &&
+      {calendarType === 'remind' &&
         <Calendar
           title={'Remind'}
           id={id}
@@ -155,6 +164,7 @@ const Due = ({id}) => {
   const due = useSelector((state) => state.tasks).find((el) => el.id === id).due
   const dispatch = useDispatch()
   const overDue = moment().format('L') > moment(due).format('L')
+  const {token} = useSelector((state) => state.system)
 
   const classActive = due ? 'due_active' : ''
 
@@ -167,7 +177,10 @@ const Due = ({id}) => {
 
   const deleteDueHandler = (event) => {
     event.stopPropagation()
-    return dispatch(deleteDue(id))
+    return dispatch(patchTasks(token, {
+      id,
+      due: '',
+    }))
   }
   const calendarOption = {
     lastDay: '[Yesterday]',
@@ -218,11 +231,17 @@ Due.propTypes = {
 
 const Note = ({id}) => {
   const task = useSelector((state) => state.tasks).filter((el) => el.id === id)
+  const [note, setNote] = useState(task.note)
+  const {token} = useSelector((state) => state.system)
   const dispatch = useDispatch()
   const onChangeHandler = (event) => {
-    return dispatch(addNote({
+    return setNote(event.target.value.trim())
+  }
+
+  const saveNoteOnServer = () => {
+    return dispatch(patchTasks(token, {
       id,
-      note: event.target.value.trim(),
+      note,
     }))
   }
 
@@ -230,10 +249,12 @@ const Note = ({id}) => {
     <div className="note-wrapper">
       <Textarea
         onChange={onChangeHandler}
-        value={task.note}
+        value={note}
         maxRows={15}
         className="note__textarea"
-        placeholder="Add note"/>
+        placeholder="Add note"
+        onBlur={saveNoteOnServer}
+      />
     </div>
   )
 }
@@ -243,13 +264,13 @@ Note.propTypes = {
 }
 
 // TODO: Make tags selector
-const Tags = ({id}) => {
-  return (
-    <div className="tag-wrapper">
-      
-    </div>
-  )
-}
+// const Tags = ({id}) => {
+//   return (
+//     <div className="tag-wrapper">
+//
+//     </div>
+//   )
+// }
 
 const Footer = ({id}) => {
   const dispatch = useDispatch()

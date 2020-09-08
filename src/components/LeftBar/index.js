@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import './index.scss'
 import {Link, useLocation} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {addNewList} from '../../redux/actions'
+
+import './index.scss'
 
 const LeftBar = () => {
   const [className, setClassName] = useState('')
@@ -161,6 +162,7 @@ const AddButton = ({active, show}) => {
   const classes = active ? 'left-bar__category_active' : ''
   const [value, setValue] = useState('')
   const dispatch = useDispatch()
+  const {token} = useSelector((state) => state.system)
 
   const onClickHandler = () => {
     return show()
@@ -173,7 +175,7 @@ const AddButton = ({active, show}) => {
   const onKeyPress = (event) => {
     if (event.key === 'Enter') {
       if (value.trim()) {
-        dispatch(addNewList(value))
+        dispatch(addNewList(token, value))
         return setValue('')
       }
     }

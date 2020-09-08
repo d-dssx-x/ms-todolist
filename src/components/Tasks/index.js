@@ -1,16 +1,17 @@
-import React, {useRef, useEffect} from 'react'
+import React, {useRef, useEffect, useState} from 'react'
 import './index.scss'
 import PropTypes from 'prop-types'
 import Field from '../Field'
 import Item from '../Item'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {
   changeTitleList,
   selectTask,
   hideModal,
   showModal,
   hideListModal,
-  showDeleteAlert} from '../../redux/actions'
+  showDeleteAlert,
+} from '../../redux/actions'
 import moment from 'moment'
 import TasksBlock from '../TasksBlock'
 
@@ -28,22 +29,27 @@ const Tasks = ({
   const doneTasks = tasks.filter((el) => el.done)
 
   const dispatch = useDispatch()
-
+  const {token} = useSelector((state) => state.system)
+  const [titleCurrent, setTitleCurrent] = useState(title)
   const ref = useRef(null)
 
   const refBlock = useRef(null)
 
   const inputHandler = (event) => {
-    return dispatch(changeTitleList({
-      id: listId,
-      title: event.target.value,
-    }))
+    return setTitleCurrent(event.target.value)
   }
 
   const blurInputHandler = (event) => {
     if (event.key === 'Enter') {
       return ref.current.blur()
     }
+  }
+
+  const saveTitle = () => {
+    return dispatch(changeTitleList(token, {
+      id: listId,
+      title: titleCurrent,
+    }))
   }
 
   const closeRightBarHandler = (event) => {
@@ -95,9 +101,10 @@ const Tasks = ({
           ref={ref}
           disabled={disabledInput}
           className="tasks__title"
-          value={title}
+          value={titleCurrent}
           onChange={inputHandler}
           onKeyPress={blurInputHandler}
+          onBlur={saveTitle}
         />
         {!disableDelete &&
           <div

@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import './index.scss'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {addTask} from '../../redux/actions'
 import moment from 'moment'
 
@@ -11,6 +11,7 @@ const Field = ({listId, important, isMyDay, placeholder, isPlanned}) => {
   const classes = active ? 'field_active' : ''
   const [taskTitle, setTaskTitle] = useState('')
   const dispatch = useDispatch()
+  const {token} = useSelector((state) => state.system)
 
   const pressActiveHandler = () => {
     return setActive(true)
@@ -42,12 +43,12 @@ const Field = ({listId, important, isMyDay, placeholder, isPlanned}) => {
 
   const onKeyPressHandler = (event) => {
     if (event.key === 'Enter' && taskTitle.trim() !== '') {
-      dispatch(addTask({
+      dispatch(addTask(token, {
         title: taskTitle,
         listId,
         important,
         myday: isMyDay,
-        due: isPlanned ? moment().format('L') : null,
+        due: isPlanned ? moment().format('L') : '',
       }))
       setTaskTitle('')
     }

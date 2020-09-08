@@ -7,7 +7,8 @@ import {
   switchImprtntTask,
   selectTask,
   switchTasksInList,
-  hideModal} from '../../redux/actions'
+  hideModal, patchTasks
+} from '../../redux/actions'
 import {useDrop, useDrag} from 'react-dnd'
 import {DND_ITEM} from '../../types'
 import moment from 'moment'
@@ -54,15 +55,20 @@ const Item = ({
   }
 
   const overDue = moment().format('L') > moment(due).format('L')
-
+  const {token} = useSelector((state) => state.system)
   const doneHandler = (event) => {
     event.stopPropagation()
-    return dispatch(switchDoneTask(id))
+    return dispatch(patchTasks(token, {
+      id,
+      done: !done,
+    }))
   }
-
   const importantHandler = (event) => {
     event.stopPropagation()
-    return dispatch(switchImprtntTask(id))
+    return dispatch(patchTasks(token, {
+      id,
+      important: !important,
+    }))
   }
 
   const selectTaskHandler = () => {
